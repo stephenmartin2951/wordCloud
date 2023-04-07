@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-S_SERVER 1ossl"
-.TH OPENSSL-S_SERVER 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-S_SERVER 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -367,6 +367,8 @@ openssl\-s_server \- SSL/TLS server program
 [\fB\-provider\fR \fIname\fR]
 [\fB\-provider\-path\fR \fIpath\fR]
 [\fB\-propquery\fR \fIpropq\fR]
+[\fB\-enable_server_rpk\fR]
+[\fB\-enable_client_rpk\fR]
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
 This command implements a generic \s-1SSL/TLS\s0 server which
@@ -982,6 +984,24 @@ See \*(L"Verification Options\*(R" in \fBopenssl\-verification\-options\fR\|(1) 
 If the server requests a client certificate, then
 verification errors are displayed, for debugging, but the command will
 proceed unless the \fB\-verify_return_error\fR option is used.
+.IP "\fB\-enable_server_rpk\fR" 4
+.IX Item "-enable_server_rpk"
+Enable support for sending raw public keys (\s-1RFC7250\s0) to the client.
+A raw public key will be sent by the server, if solicited by the client,
+provided a suitable key and public certificate pair is configured.
+Clients that don't support raw public keys or prefer to use X.509
+certificates can still elect to receive X.509 certificates as usual.
+.Sp
+Raw public keys are extracted from the configured certificate/private key.
+.IP "\fB\-enable_client_rpk\fR" 4
+.IX Item "-enable_client_rpk"
+Enable support for receiving raw public keys (\s-1RFC7250\s0) from the client.
+Use of X.509 certificates by the client becomes optional, and clients that
+support raw public keys may elect to use them.
+Clients that don't support raw public keys or prefer to use X.509
+certificates can still elect to send X.509 certificates as usual.
+.Sp
+Raw public keys are extracted from the configured certificate/private key.
 .SH "CONNECTED COMMANDS"
 .IX Header "CONNECTED COMMANDS"
 If a connection request is established with an \s-1SSL\s0 client and neither the
@@ -1069,11 +1089,16 @@ The
 The \fB\-srpvfile\fR, \fB\-srpuserseed\fR, and \fB\-engine\fR
 option were deprecated in OpenSSL 3.0.
 .PP
-The \fB\-tfo\fR, \fB\-no_tx_cert_comp\fR, and \fB\-no_rx_cert_comp\fR options were added
-in OpenSSL 3.2.
+The
+\&\fB\-enable_client_rpk\fR,
+\&\fB\-enable_server_rpk\fR,
+\&\fB\-no_rx_cert_comp\fR,
+\&\fB\-no_tx_cert_comp\fR,
+and \fB\-tfo\fR
+options were added in OpenSSL 3.2.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2000\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2000\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

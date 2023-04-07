@@ -281,6 +281,8 @@
 
 <h1 id="NOTES">NOTES</h1>
 
+<p>The use of a nonzero value for the <i>prediction_resistance</i> argument to EVP_RAND_instantiate(), EVP_RAND_generate() or EVP_RAND_reseed() should be used sparingly. In the default setup, this will cause all public and private DRBGs to be reseeded on next use. Since, by default, public and private DRBGs are allocated on a per thread basis, this can result in significant overhead for highly multi-threaded applications. For normal use-cases, the default &quot;reseed_requests&quot; and &quot;reseed_time_interval&quot; thresholds ensure sufficient prediction resistance over time and you can reduce those values if you think they are too high. Explicitly requesting prediction resistance is intended for more special use-cases like generating long-term secrets.</p>
+
 <p>An <b>EVP_RAND_CTX</b> needs to have locking enabled if it acts as the parent of more than one child and the children can be accessed concurrently. This must be done by explicitly calling EVP_RAND_enable_locking().</p>
 
 <p>The RAND life-cycle is described in <a href="../man7/life_cycle-rand.html">life_cycle-rand(7)</a>. In the future, the transitions described there will be enforced. When this is done, it will not be considered a breaking change to the API.</p>

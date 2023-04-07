@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "X509_VERIFY 3ossl"
-.TH X509_VERIFY 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH X509_VERIFY 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -206,7 +206,7 @@ functions are available in all versions of OpenSSL.
 \&\fBX509_REQ_verify_ex()\fR, and \fBX509_self_signed()\fR were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2015\-2021 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2015\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

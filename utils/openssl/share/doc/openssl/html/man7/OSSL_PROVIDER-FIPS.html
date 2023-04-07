@@ -16,6 +16,7 @@
   <li><a href="#DESCRIPTION">DESCRIPTION</a>
     <ul>
       <li><a href="#Properties">Properties</a></li>
+      <li><a href="#Provider-parameters">Provider parameters</a></li>
     </ul>
   </li>
   <li><a href="#OPERATIONS-AND-ALGORITHMS">OPERATIONS AND ALGORITHMS</a>
@@ -29,6 +30,7 @@
       <li><a href="#Asymmetric-Cipher">Asymmetric Cipher</a></li>
       <li><a href="#Asymmetric-Key-Encapsulation">Asymmetric Key Encapsulation</a></li>
       <li><a href="#Asymmetric-Key-Management">Asymmetric Key Management</a></li>
+      <li><a href="#Random-Number-Generation">Random Number Generation</a></li>
     </ul>
   </li>
   <li><a href="#SELF-TESTING">SELF TESTING</a></li>
@@ -65,9 +67,23 @@
 
 <p>It may be used in a property query string with fetching functions such as <a href="../man3/EVP_MD_fetch.html">EVP_MD_fetch(3)</a> or <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a>, as well as with other functions that take a property query string, such as <a href="../man3/EVP_PKEY_CTX_new_from_name.html">EVP_PKEY_CTX_new_from_name(3)</a>.</p>
 
-<p>It isn&#39;t mandatory to query for any of these properties, except to make sure to get implementations of this provider and none other.</p>
+<p>To be FIPS compliant, it is mandatory to include <code>fips=yes</code> as part of all property queries. This ensures that only FIPS approved implementations are used for cryptographic operations. The <code>fips=yes</code> query may also include other non-crypto support operations that are not in the FIPS provider, such as asymmetric key encoders, see <a href="../man7/OSSL_PROVIDER-default.html">&quot;Asymmetric Key Management&quot; in OSSL_PROVIDER-default(7)</a>.</p>
 
-<p>The <code>fips=yes</code> property can be use to make sure only FIPS approved implementations are used for crypto operations. This may also include other non-crypto support operations that are not in the FIPS provider, such as asymmetric key encoders, see <a href="../man7/OSSL_PROVIDER-default.html">&quot;Asymmetric Key Management&quot; in OSSL_PROVIDER-default(7)</a>.</p>
+<p>It is not mandatory to include <code>provider=fips</code> as part of your property query. Including <code>provider=fips</code> in your property query guarantees that the OpenSSL FIPS provider is used for cryptographic operations rather than other FIPS capable providers.</p>
+
+<h2 id="Provider-parameters">Provider parameters</h2>
+
+<p>See <a href="../man7/provider-base.html">&quot;Provider parameters&quot; in provider-base(7)</a> for a list of base parameters. Additionally the OpenSSL FIPS provider also supports the following gettable parameters:</p>
+
+<dl>
+
+<dt id="security-checks-OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS-unsigned-integer">&quot;security-checks&quot; (<b>OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS</b>) &lt;unsigned integer&gt;</dt>
+<dd>
+
+<p>For further information refer to the <a href="../man1/openssl-fipsinstall.html">openssl-fipsinstall(1)</a> option <b>-no_security_checks</b>.</p>
+
+</dd>
+</dl>
 
 <h1 id="OPERATIONS-AND-ALGORITHMS">OPERATIONS AND ALGORITHMS</h1>
 
@@ -271,6 +287,30 @@
 </dd>
 <dt id="X448-see-EVP_KEYMGMT-X448-7">X448, see <a href="../man7/EVP_KEYMGMT-X448.html">EVP_KEYMGMT-X448(7)</a></dt>
 <dd>
+
+</dd>
+</dl>
+
+<h2 id="Random-Number-Generation">Random Number Generation</h2>
+
+<dl>
+
+<dt id="CTR-DRBG-see-EVP_RAND-CTR-DRBG-7">CTR-DRBG, see <a href="../man7/EVP_RAND-CTR-DRBG.html">EVP_RAND-CTR-DRBG(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="HASH-DRBG-see-EVP_RAND-HASH-DRBG-7">HASH-DRBG, see <a href="../man7/EVP_RAND-HASH-DRBG.html">EVP_RAND-HASH-DRBG(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="HMAC-DRBG-see-EVP_RAND-HMAC-DRBG-7">HMAC-DRBG, see <a href="../man7/EVP_RAND-HMAC-DRBG.html">EVP_RAND-HMAC-DRBG(7)</a></dt>
+<dd>
+
+</dd>
+<dt id="TEST-RAND-see-EVP_RAND-TEST-RAND-7">TEST-RAND, see <a href="../man7/EVP_RAND-TEST-RAND.html">EVP_RAND-TEST-RAND(7)</a></dt>
+<dd>
+
+<p>TEST-RAND is an unapproved algorithm.</p>
 
 </dd>
 </dl>

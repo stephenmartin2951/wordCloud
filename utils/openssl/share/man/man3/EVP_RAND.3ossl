@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_RAND 3ossl"
-.TH EVP_RAND 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH EVP_RAND 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -459,6 +459,18 @@ The value is always the name of the intended algorithm,
 or the properties in the case of \fB\s-1OSSL_RAND_PARAM_PROPERTIES\s0\fR.
 .SH "NOTES"
 .IX Header "NOTES"
+The use of a nonzero value for the \fIprediction_resistance\fR argument to
+\&\fBEVP_RAND_instantiate()\fR, \fBEVP_RAND_generate()\fR or \fBEVP_RAND_reseed()\fR should
+be used sparingly.  In the default setup, this will cause all public and
+private DRBGs to be reseeded on next use.  Since, by default, public and
+private DRBGs are allocated on a per thread basis, this can result in
+significant overhead for highly multi-threaded applications.  For normal
+use-cases, the default \*(L"reseed_requests\*(R" and \*(L"reseed_time_interval\*(R"
+thresholds ensure sufficient prediction resistance over time and you
+can reduce those values if you think they are too high.  Explicitly
+requesting prediction resistance is intended for more special use-cases
+like generating long-term secrets.
+.PP
 An \fB\s-1EVP_RAND_CTX\s0\fR needs to have locking enabled if it acts as the parent of
 more than one child and the children can be accessed concurrently.  This must
 be done by explicitly calling \fBEVP_RAND_enable_locking()\fR.

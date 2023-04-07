@@ -133,14 +133,14 @@
 .\" ========================================================================
 .\"
 .IX Title "SSL_GET_VERSION 3ossl"
-.TH SSL_GET_VERSION 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH SSL_GET_VERSION 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-SSL_client_version, SSL_get_version, SSL_is_dtls, SSL_version \- get the
-protocol information of a connection
+SSL_client_version, SSL_get_version, SSL_is_dtls, SSL_is_tls, SSL_is_quic,
+SSL_version \- get the protocol information of a connection
 .SH "SYNOPSIS"
 .IX Header "SYNOPSIS"
 .Vb 1
@@ -151,6 +151,8 @@ protocol information of a connection
 \& const char *SSL_get_version(const SSL *ssl);
 \&
 \& int SSL_is_dtls(const SSL *ssl);
+\& int SSL_is_tls(const SSL *ssl);
+\& int SSL_is_quic(const SSL *ssl);
 \&
 \& int SSL_version(const SSL *s);
 .Ve
@@ -165,7 +167,11 @@ the numeric protocol version used for the connection. They should only be called
 after the initial handshake has been completed. Prior to that the results
 returned from these functions may be unreliable.
 .PP
-\&\fBSSL_is_dtls()\fR returns one if the connection is using \s-1DTLS,\s0 zero if not.
+\&\fBSSL_is_dtls()\fR returns 1 if the connection is using \s-1DTLS\s0 or 0 if not.
+.PP
+\&\fBSSL_is_tls()\fR returns 1 if the connection is using \s-1SSL/TLS\s0 or 0 if not.
+.PP
+\&\fBSSL_is_quic()\fR returns 1 if the connection is using \s-1QUIC\s0 or 0 if not.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\fBSSL_get_version()\fR returns one of the following strings:
@@ -184,6 +190,18 @@ The connection uses the TLSv1.2 protocol.
 .IP "TLSv1.3" 4
 .IX Item "TLSv1.3"
 The connection uses the TLSv1.3 protocol.
+.IP "DTLSv0.9" 4
+.IX Item "DTLSv0.9"
+The connection uses an obsolete pre-standardisation \s-1DTLS\s0 protocol
+.IP "DTLSv1" 4
+.IX Item "DTLSv1"
+The connection uses the DTLSv1 protocol
+.IP "DTLSv1.2" 4
+.IX Item "DTLSv1.2"
+The connection uses the DTLSv1.2 protocol
+.IP "QUICv1" 4
+.IX Item "QUICv1"
+The connection uses the QUICv1 protocol.
 .IP "unknown" 4
 .IX Item "unknown"
 This indicates an unknown protocol version.
@@ -206,12 +224,26 @@ The connection uses the TLSv1.2 protocol.
 .IX Item "TLS1_3_VERSION"
 The connection uses the TLSv1.3 protocol (never returned for
 \&\fBSSL_client_version()\fR).
+.IP "\s-1DTLS1_BAD_VER\s0" 4
+.IX Item "DTLS1_BAD_VER"
+The connection uses an obsolete pre-standardisation \s-1DTLS\s0 protocol
+.IP "\s-1DTLS1_VERSION\s0" 4
+.IX Item "DTLS1_VERSION"
+The connection uses the DTLSv1 protocol
+.IP "\s-1DTLS1_2_VERSION\s0" 4
+.IX Item "DTLS1_2_VERSION"
+The connection uses the DTLSv1.2 protocol
+.IP "\s-1OSSL_QUIC1_VERSION\s0" 4
+.IX Item "OSSL_QUIC1_VERSION"
+The connection uses the QUICv1 protocol (never returned for
+\&\fBSSL_client_version()\fR).
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBssl\fR\|(7)
 .SH "HISTORY"
 .IX Header "HISTORY"
-The \fBSSL_is_dtls()\fR function was added in OpenSSL 1.1.0.
+The \fBSSL_is_dtls()\fR function was added in OpenSSL 1.1.0. The \fBSSL_is_tls()\fR and
+\&\fBSSL_is_quic()\fR functions were added in OpenSSL 3.2.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
 Copyright 2001\-2018 The OpenSSL Project Authors. All Rights Reserved.

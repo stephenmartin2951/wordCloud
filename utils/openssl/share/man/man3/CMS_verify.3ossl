@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "CMS_VERIFY 3ossl"
-.TH CMS_VERIFY 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH CMS_VERIFY 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -177,7 +177,7 @@ it operates on \fB\s-1CMS\s0 SignedData\fR input in the \fIsd\fR argument,
 it has some additional parameters described next,
 and on success it returns the verfied content as a memory \s-1BIO.\s0
 The optional \fIextra\fR parameter may be used to provide untrusted \s-1CA\s0
-certificates that may be helpful for chain building in certificate valiation.
+certificates that may be helpful for chain building in certificate validation.
 This list of certificates must not contain duplicates.
 The optional \fIcrls\fR parameter may be used to provide extra CRLs.
 Also the list of CRLs must not contain duplicates.

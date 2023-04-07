@@ -15,6 +15,7 @@
   <li><a href="#NAME">NAME</a></li>
   <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
   <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#NOTES">NOTES</a></li>
   <li><a href="#RETURN-VALUES">RETURN VALUES</a></li>
   <li><a href="#SEE-ALSO">SEE ALSO</a></li>
   <li><a href="#COPYRIGHT">COPYRIGHT</a></li>
@@ -61,6 +62,10 @@
 
 </dd>
 </dl>
+
+<h1 id="NOTES">NOTES</h1>
+
+<p>Developers should be aware of the negative performance implications of calling these functions multiple times and should consider using <a href="../man3/EVP_CIPHER_fetch.html">EVP_CIPHER_fetch(3)</a> instead. See <a href="../man7/crypto.html">&quot;Performance&quot; in crypto(7)</a> for further information.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 

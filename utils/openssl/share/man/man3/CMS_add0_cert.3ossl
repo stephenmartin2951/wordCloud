@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "CMS_ADD0_CERT 3ossl"
-.TH CMS_ADD0_CERT 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH CMS_ADD0_CERT 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -157,7 +157,13 @@ CMS_add0_crl, CMS_add1_crl, CMS_get1_crls
 .Ve
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
-\&\fBCMS_add0_cert()\fR and \fBCMS_add1_cert()\fR add certificate \fIcert\fR to \fIcms\fR.
+\&\fBCMS_add0_cert()\fR and \fBCMS_add1_cert()\fR add certificate \fIcert\fR to \fIcms\fR
+unless it is already present.
+This is used by \fBCMS_sign_ex\fR\|(3) and \fBCMS_sign\fR\|(3) and may be used before
+calling \fBCMS_verify\fR\|(3) to help chain building in certificate validation.
+As the 0 implies, \fBCMS_add0_cert()\fR adds \fIcert\fR internally to \fIcms\fR
+and on success it must not be freed up by the caller.
+In contrast, the caller of \fBCMS_add1_cert()\fR must free \fIcert\fR.
 \&\fIcms\fR must be of type signed data or (authenticated) enveloped data.
 For signed data, such a certificate can be used when signing or verifying
 to fill in the signer certificate or to provide an extra \s-1CA\s0 certificate
@@ -167,7 +173,8 @@ that may be needed for chain building in certificate validation.
 .PP
 \&\fBCMS_add0_crl()\fR and \fBCMS_add1_crl()\fR add \s-1CRL\s0 \fIcrl\fR to \fIcms\fR.
 \&\fIcms\fR must be of type signed data or (authenticated) enveloped data.
-For signed data, such a \s-1CRL\s0 may be used in certificate validation.
+For signed data, such a \s-1CRL\s0 may be used in certificate validation
+with \fBCMS_verify\fR\|(3).
 It may be given both for inclusion when signing a \s-1CMS\s0 message
 and when verifying a signed \s-1CMS\s0 message.
 .PP
@@ -180,13 +187,6 @@ data or authenticated enveloped data or an error will be returned.
 For signed data, certificates and CRLs are added to the \fIcertificates\fR and
 \&\fIcrls\fR fields of SignedData structure.
 For enveloped data they are added to \fBOriginatorInfo\fR.
-.PP
-As the 0 implies, \fBCMS_add0_cert()\fR adds \fIcert\fR internally to \fIcms\fR and it
-must not be freed up after the call as opposed to \fBCMS_add1_cert()\fR where \fIcert\fR
-must be freed up.
-.PP
-The same certificate or \s-1CRL\s0 must not be added to the same cms structure more
-than once.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\fBCMS_add0_cert()\fR, \fBCMS_add1_cert()\fR and \fBCMS_add0_crl()\fR and \fBCMS_add1_crl()\fR return
@@ -198,8 +198,12 @@ in practice is if the \fIcms\fR type is invalid.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBERR_get_error\fR\|(3),
-\&\fBCMS_sign\fR\|(3),
+\&\fBCMS_sign\fR\|(3), \fBCMS_sign_ex\fR\|(3), \fBCMS_verify\fR\|(3),
 \&\fBCMS_encrypt\fR\|(3)
+.SH "HISTORY"
+.IX Header "HISTORY"
+\&\fBCMS_add0_cert()\fR and \fBCMS_add1_cert()\fR have been changed in OpenSSL 3.2
+not to throw an error if a certificate to be added is already present.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
 Copyright 2008\-2016 The OpenSSL Project Authors. All Rights Reserved.

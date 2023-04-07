@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_PROVIDER-DEFAULT 7ossl"
-.TH OSSL_PROVIDER-DEFAULT 7ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OSSL_PROVIDER-DEFAULT 7ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -202,6 +202,8 @@ The OpenSSL default provider supports these operations and algorithms:
 .IX Item "MD5-SHA1, see EVP_MD-MD5-SHA1"
 .IP "\s-1RIPEMD160,\s0 see \s-1\fBEVP_MD\-RIPEMD160\s0\fR\|(7)" 4
 .IX Item "RIPEMD160, see EVP_MD-RIPEMD160"
+.IP "\s-1NULL,\s0 see \s-1\fBEVP_MD\-NULL\s0\fR\|(7)" 4
+.IX Item "NULL, see EVP_MD-NULL"
 .PD
 .SS "Symmetric Ciphers"
 .IX Subsection "Symmetric Ciphers"
@@ -222,6 +224,8 @@ The OpenSSL default provider supports these operations and algorithms:
 .IX Item "ChaCha20, see EVP_CIPHER-CHACHA"
 .IP "ChaCha20\-Poly1305, see \s-1\fBEVP_CIPHER\-CHACHA\s0\fR\|(7)" 4
 .IX Item "ChaCha20-Poly1305, see EVP_CIPHER-CHACHA"
+.IP "\s-1NULL,\s0 see \s-1\fBEVP_CIPHER\-NULL\s0\fR\|(7)" 4
+.IX Item "NULL, see EVP_CIPHER-NULL"
 .PD
 .SS "Message Authentication Code (\s-1MAC\s0)"
 .IX Subsection "Message Authentication Code (MAC)"
@@ -270,6 +274,8 @@ The OpenSSL default provider supports these operations and algorithms:
 .IX Item "KRB5KDF, see EVP_KDF-KRB5KDF"
 .IP "HMAC-DRBG, see \s-1\fBEVP_KDF\-HMAC\-DRBG\s0\fR\|(7)" 4
 .IX Item "HMAC-DRBG, see EVP_KDF-HMAC-DRBG"
+.IP "\s-1ARGON2,\s0 see \s-1\fBEVP_KDF\-ARGON2\s0\fR\|(7)" 4
+.IX Item "ARGON2, see EVP_KDF-ARGON2"
 .PD
 .SS "Key Exchange"
 .IX Subsection "Key Exchange"
@@ -334,6 +340,20 @@ The OpenSSL default provider supports these operations and algorithms:
 .IX Item "X25519, see EVP_KEYMGMT-X25519"
 .IP "X448, see \s-1\fBEVP_KEYMGMT\-X448\s0\fR\|(7)" 4
 .IX Item "X448, see EVP_KEYMGMT-X448"
+.PD
+.SS "Random Number Generation"
+.IX Subsection "Random Number Generation"
+.IP "CTR-DRBG, see \s-1\fBEVP_RAND\-CTR\-DRBG\s0\fR\|(7)" 4
+.IX Item "CTR-DRBG, see EVP_RAND-CTR-DRBG"
+.PD 0
+.IP "HASH-DRBG, see \s-1\fBEVP_RAND\-HASH\-DRBG\s0\fR\|(7)" 4
+.IX Item "HASH-DRBG, see EVP_RAND-HASH-DRBG"
+.IP "HMAC-DRBG, see \s-1\fBEVP_RAND\-HMAC\-DRBG\s0\fR\|(7)" 4
+.IX Item "HMAC-DRBG, see EVP_RAND-HMAC-DRBG"
+.IP "SEED-SRC,  see \s-1\fBEVP_RAND\-SEED\-SRC\s0\fR\|(7)" 4
+.IX Item "SEED-SRC, see EVP_RAND-SEED-SRC"
+.IP "TEST-RAND, see \s-1\fBEVP_RAND\-TEST\-RAND\s0\fR\|(7)" 4
+.IX Item "TEST-RAND, see EVP_RAND-TEST-RAND"
 .PD
 .SS "Asymmetric Key Encoder"
 .IX Subsection "Asymmetric Key Encoder"

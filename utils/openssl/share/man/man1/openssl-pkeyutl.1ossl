@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-PKEYUTL 1ossl"
-.TH OPENSSL-PKEYUTL 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-PKEYUTL 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -232,7 +232,9 @@ The peer key format; unspecified by default.
 See \fBopenssl\-format\-options\fR\|(1) for details.
 .IP "\fB\-pubin\fR" 4
 .IX Item "-pubin"
-The input file is a public key.
+By default a private key is read from the key input.
+With this option a public key is read instead.
+If the input contains no public key but a private key, its public part is used.
 .IP "\fB\-certin\fR" 4
 .IX Item "-certin"
 The input is a certificate containing a public key.

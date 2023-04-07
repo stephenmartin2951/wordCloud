@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-KEYMGMT 7ossl"
-.TH PROVIDER-KEYMGMT 7ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH PROVIDER-KEYMGMT 7ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -185,9 +185,11 @@ provider\-keymgmt \- The KEYMGMT library <\-> provider functions
 \& /* Key object import and export functions */
 \& int OSSL_FUNC_keymgmt_import(void *keydata, int selection, const OSSL_PARAM params[]);
 \& const OSSL_PARAM *OSSL_FUNC_keymgmt_import_types(int selection);
+\& const OSSL_PARAM *OSSL_FUNC_keymgmt_import_types_ex(void *provctx, int selection);
 \& int OSSL_FUNC_keymgmt_export(void *keydata, int selection,
 \&                              OSSL_CALLBACK *param_cb, void *cbarg);
 \& const OSSL_PARAM *OSSL_FUNC_keymgmt_export_types(int selection);
+\& const OSSL_PARAM *OSSL_FUNC_keymgmt_export_types_ex(void *provctx, int selection);
 \&
 \& /* Key object duplication, a constructor */
 \& void *OSSL_FUNC_keymgmt_dup(const void *keydata_from, int selection);
@@ -255,8 +257,10 @@ macros in \fBopenssl\-core_dispatch.h\fR\|(7), as follows:
 \&
 \& OSSL_FUNC_keymgmt_import               OSSL_FUNC_KEYMGMT_IMPORT
 \& OSSL_FUNC_keymgmt_import_types         OSSL_FUNC_KEYMGMT_IMPORT_TYPES
+\& OSSL_FUNC_keymgmt_import_types_ex      OSSL_FUNC_KEYMGMT_IMPORT_TYPES_EX
 \& OSSL_FUNC_keymgmt_export               OSSL_FUNC_KEYMGMT_EXPORT
 \& OSSL_FUNC_keymgmt_export_types         OSSL_FUNC_KEYMGMT_EXPORT_TYPES
+\& OSSL_FUNC_keymgmt_export_types_ex      OSSL_FUNC_KEYMGMT_EXPORT_TYPES_EX
 \&
 \& OSSL_FUNC_keymgmt_dup                  OSSL_FUNC_KEYMGMT_DUP
 .Ve
@@ -444,13 +448,25 @@ by the implementation of this function.
 from \fIkeydata\fR, create an \s-1\fBOSSL_PARAM\s0\fR\|(3) array with them and call
 \&\fIparam_cb\fR with that array as well as the given \fIcbarg\fR.
 .PP
-\&\fBOSSL_FUNC_keymgmt_import_types()\fR should return a constant array of descriptor
+\&\fBOSSL_FUNC_keymgmt_import_types()\fR and \fBOSSL_FUNC_keymgmt_import_types_ex()\fR
+should return a constant array of descriptor
 \&\s-1\fBOSSL_PARAM\s0\fR\|(3) for data indicated by \fIselection\fR, for parameters that
 \&\fBOSSL_FUNC_keymgmt_import()\fR can handle.
+Either \fBOSSL_FUNC_keymgmt_import_types()\fR or \fBOSSL_FUNC_keymgmt_import_types_ex()\fR,
+must be implemented, if \fBOSSL_FUNC_keymgmt_import_types_ex()\fR is implemented, then
+it is preferred over \fBOSSL_FUNC_keymgmt_import_types()\fR.
+Providers that are supposed to be backward compatible with OpenSSL 3.0 or 3.1
+must continue to implement \fBOSSL_FUNC_keymgmt_import_types()\fR.
 .PP
-\&\fBOSSL_FUNC_keymgmt_export_types()\fR should return a constant array of descriptor
+\&\fBOSSL_FUNC_keymgmt_export_types()\fR and \fBOSSL_FUNC_keymgmt_export_types_ex()\fR
+should return a constant array of descriptor
 \&\s-1\fBOSSL_PARAM\s0\fR\|(3) for data indicated by \fIselection\fR, that the
 \&\fBOSSL_FUNC_keymgmt_export()\fR callback can expect to receive.
+Either \fBOSSL_FUNC_keymgmt_export_types()\fR or \fBOSSL_FUNC_keymgmt_export_types_ex()\fR,
+must be implemented, if \fBOSSL_FUNC_keymgmt_export_types_ex()\fR is implemented, then
+it is preferred over \fBOSSL_FUNC_keymgmt_export_types()\fR.
+Providers that are supposed to be backward compatible with OpenSSL 3.0 or 3.1
+must continue to implement \fBOSSL_FUNC_keymgmt_export_types()\fR.
 .PP
 \&\fBOSSL_FUNC_keymgmt_dup()\fR should duplicate data subsets indicated by
 \&\fIselection\fR or the whole key data \fIkeydata_from\fR and create a new
@@ -485,6 +501,36 @@ dimensions handled in the rest of the same provider.
 .IX Item "security-bits (OSSL_PKEY_PARAM_SECURITY_BITS) <integer>"
 The value should be the number of security bits of the given key.
 Bits of security is defined in \s-1SP800\-57.\s0
+.ie n .IP """mandatory-digest"" (\fB\s-1OSSL_PKEY_PARAM_MANDATORY_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
+.el .IP "``mandatory-digest'' (\fB\s-1OSSL_PKEY_PARAM_MANDATORY_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
+.IX Item "mandatory-digest (OSSL_PKEY_PARAM_MANDATORY_DIGEST) <UTF8 string>"
+If there is a mandatory digest for performing a signature operation with
+keys from this keymgmt, this parameter should get its name as value.
+.Sp
+When \fBEVP_PKEY_get_default_digest_name()\fR queries this parameter and it's
+filled in by the implementation, its return value will be 2.
+.Sp
+If the keymgmt implementation fills in the value \f(CW""\fR or \f(CW"UNDEF"\fR,
+\&\fBEVP_PKEY_get_default_digest_name\fR\|(3) will place the string \f(CW"UNDEF"\fR into
+its argument \fImdname\fR.  This signifies that no digest should be specified
+with the corresponding signature operation.
+.ie n .IP """default-digest"" (\fB\s-1OSSL_PKEY_PARAM_DEFAULT_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
+.el .IP "``default-digest'' (\fB\s-1OSSL_PKEY_PARAM_DEFAULT_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
+.IX Item "default-digest (OSSL_PKEY_PARAM_DEFAULT_DIGEST) <UTF8 string>"
+If there is a default digest for performing a signature operation with
+keys from this keymgmt, this parameter should get its name as value.
+.Sp
+When \fBEVP_PKEY_get_default_digest_name\fR\|(3) queries this parameter and it's
+filled in by the implementation, its return value will be 1.  Note that if
+\&\fB\s-1OSSL_PKEY_PARAM_MANDATORY_DIGEST\s0\fR is responded to as well,
+\&\fBEVP_PKEY_get_default_digest_name\fR\|(3) ignores the response to this
+parameter.
+.Sp
+If the keymgmt implementation fills in the value \f(CW""\fR or \f(CW"UNDEF"\fR,
+\&\fBEVP_PKEY_get_default_digest_name\fR\|(3) will place the string \f(CW"UNDEF"\fR into
+its argument \fImdname\fR.  This signifies that no digest has to be specified
+with the corresponding signature operation, but may be specified as an
+option.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\fBOSSL_FUNC_keymgmt_new()\fR and \fBOSSL_FUNC_keymgmt_dup()\fR should return a valid
@@ -504,7 +550,8 @@ the requested operation, or \s-1NULL\s0 if the same name used to fetch the keymg
 applies.
 .PP
 \&\fBOSSL_FUNC_keymgmt_gettable_params()\fR and \fBOSSL_FUNC_keymgmt_settable_params()\fR
-\&\fBOSSL_FUNC_keymgmt_import_types()\fR, \fBOSSL_FUNC_keymgmt_export_types()\fR
+\&\fBOSSL_FUNC_keymgmt_import_types()\fR, \fBOSSL_FUNC_keymgmt_import_types_ex()\fR,
+\&\fBOSSL_FUNC_keymgmt_export_types()\fR, \fBOSSL_FUNC_keymgmt_export_types_ex()\fR
 should
 always return a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array.
 .SH "SEE ALSO"
@@ -516,6 +563,9 @@ always return a constant \s-1\fBOSSL_PARAM\s0\fR\|(3) array.
 .SH "HISTORY"
 .IX Header "HISTORY"
 The \s-1KEYMGMT\s0 interface was introduced in OpenSSL 3.0.
+.PP
+Functions \fBOSSL_FUNC_keymgmt_import_types_ex()\fR, and \fBOSSL_FUNC_keymgmt_export_types_ex()\fR
+were added with OpenSSL 3.2.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
 Copyright 2019\-2021 The OpenSSL Project Authors. All Rights Reserved.

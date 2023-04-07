@@ -133,13 +133,13 @@
 .\" ========================================================================
 .\"
 .IX Title "D2I_SSL_SESSION 3ossl"
-.TH D2I_SSL_SESSION 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH D2I_SSL_SESSION 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
-d2i_SSL_SESSION, i2d_SSL_SESSION \- convert SSL_SESSION object from/to ASN1 representation
+d2i_SSL_SESSION, d2i_SSL_SESSION_ex, i2d_SSL_SESSION \- convert SSL_SESSION object from/to ASN1 representation
 .SH "SYNOPSIS"
 .IX Header "SYNOPSIS"
 .Vb 1
@@ -147,6 +147,9 @@ d2i_SSL_SESSION, i2d_SSL_SESSION \- convert SSL_SESSION object from/to ASN1 repr
 \&
 \& SSL_SESSION *d2i_SSL_SESSION(SSL_SESSION **a, const unsigned char **pp,
 \&                              long length);
+\& SSL_SESSION *d2i_SSL_SESSION_ex(SSL_SESSION **a, const unsigned char **pp,
+\&                                 long length, OSSL_LIB_CTX *libctx,
+\&                                 const char *propq);
 \& int i2d_SSL_SESSION(SSL_SESSION *in, unsigned char **pp);
 .Ve
 .SH "DESCRIPTION"
@@ -161,8 +164,9 @@ only be used with one \s-1SSL_CTX\s0 object (and the \s-1SSL\s0 objects created
 from this \s-1SSL_CTX\s0 object).
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
-\&\fBd2i_SSL_SESSION()\fR returns a pointer to the newly allocated \s-1SSL_SESSION\s0
-object. In case of failure the NULL-pointer is returned and the error message
+\&\fBd2i_SSL_SESSION()\fR and \fBd2i_SSL_SESSION_ex()\fR return a pointer to the newly
+allocated \s-1SSL_SESSION\s0 object.
+In case of failure the NULL-pointer is returned and the error message
 can be retrieved from the error stack.
 .PP
 \&\fBi2d_SSL_SESSION()\fR returns the size of the \s-1ASN1\s0 representation in bytes.
@@ -174,7 +178,7 @@ When the session is not valid, \fB0\fR is returned and no operation is performed
 \&\fBd2i_X509\fR\|(3)
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2001\-2016 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2001\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

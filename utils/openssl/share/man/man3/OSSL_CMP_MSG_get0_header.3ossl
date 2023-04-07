@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_CMP_MSG_GET0_HEADER 3ossl"
-.TH OSSL_CMP_MSG_GET0_HEADER 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OSSL_CMP_MSG_GET0_HEADER 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -142,6 +142,7 @@
 OSSL_CMP_MSG_get0_header,
 OSSL_CMP_MSG_get_bodytype,
 OSSL_CMP_MSG_update_transactionID,
+OSSL_CMP_MSG_update_recipNonce,
 OSSL_CMP_CTX_setup_CRM,
 OSSL_CMP_MSG_read,
 OSSL_CMP_MSG_write,
@@ -156,6 +157,7 @@ i2d_OSSL_CMP_MSG_bio
 \&  OSSL_CMP_PKIHEADER *OSSL_CMP_MSG_get0_header(const OSSL_CMP_MSG *msg);
 \&  int OSSL_CMP_MSG_get_bodytype(const OSSL_CMP_MSG *msg);
 \&  int OSSL_CMP_MSG_update_transactionID(OSSL_CMP_CTX *ctx, OSSL_CMP_MSG *msg);
+\&  int OSSL_CMP_MSG_update_recipNonce(OSSL_CMP_CTX *ctx, OSSL_CMP_MSG *msg);
 \&  OSSL_CRMF_MSG *OSSL_CMP_CTX_setup_CRM(OSSL_CMP_CTX *ctx, int for_KUR, int rid);
 \&  OSSL_CMP_MSG *OSSL_CMP_MSG_read(const char *file, OSSL_LIB_CTX *libctx, const char *propq);
 \&  int OSSL_CMP_MSG_write(const char *file, const OSSL_CMP_MSG *msg);
@@ -170,7 +172,12 @@ i2d_OSSL_CMP_MSG_bio
 .PP
 \&\fBOSSL_CMP_MSG_update_transactionID()\fR updates the transactionID field
 in the header of the given message according to the \s-1CMP_CTX.\s0
-This requires re-protecting the message (if it was protected).
+If \fIctx\fR does not contain a transaction \s-1ID,\s0 a fresh one is created before.
+The message gets re-protected (if protecting requests is required).
+.PP
+\&\fBOSSL_CMP_MSG_update_recipNonce()\fR updates the recipNonce field
+in the header of the given message according to the \s-1CMP_CTX.\s0
+The message gets re-protected (if protecting requests is required).
 .PP
 \&\fBOSSL_CMP_CTX_setup_CRM()\fR creates a \s-1CRMF\s0 certificate request message
 from various information provided in the \s-1CMP\s0 context argument \fIctx\fR
@@ -247,8 +254,9 @@ return the parsed \s-1CMP\s0 message or \s-1NULL\s0 on error.
 \&\fBOSSL_CMP_MSG_write()\fR returns the number of bytes successfully encoded or a
 negative value if an error occurs.
 .PP
-\&\fBi2d_OSSL_CMP_MSG_bio()\fR and \fBOSSL_CMP_MSG_update_transactionID()\fR return 1 on
-success, 0 on error.
+\&\fBi2d_OSSL_CMP_MSG_bio()\fR, \fBOSSL_CMP_MSG_update_transactionID()\fR,
+and \fBOSSL_CMP_MSG_update_recipNonce()\fR
+return 1 on success, 0 on error.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
 \&\fBOSSL_CMP_CTX_set1_subjectName\fR\|(3), \fBOSSL_CMP_CTX_set1_p10CSR\fR\|(3),
@@ -258,6 +266,8 @@ success, 0 on error.
 .SH "HISTORY"
 .IX Header "HISTORY"
 The OpenSSL \s-1CMP\s0 support was added in OpenSSL 3.0.
+.PP
+\&\fBOSSL_CMP_MSG_update_recipNonce()\fR was added in OpenSSL 3.0.9.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
 Copyright 2007\-2022 The OpenSSL Project Authors. All Rights Reserved.

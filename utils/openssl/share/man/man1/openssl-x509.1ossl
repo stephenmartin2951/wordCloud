@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-X509 1ossl"
-.TH OPENSSL-X509 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-X509 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -222,7 +222,7 @@ openssl\-x509 \- Certificate display and signing command
 This command is a multi-purposes certificate handling command.
 It can be used to print certificate information,
 convert certificates to various forms, edit certificate trust settings,
-generate certificates from scratch or from certificating requests
+generate certificates from scratch or from certification requests
 and then self-signing them or signing them like a \*(L"micro \s-1CA\*(R".\s0
 .PP
 Generated certificates bear X.509 version 3.
@@ -253,7 +253,8 @@ see \fBopenssl\-passphrase\-options\fR\|(1).
 .IP "\fB\-new\fR" 4
 .IX Item "-new"
 Generate a certificate from scratch, not using an input certificate
-or certificate request. So the \fB\-in\fR option must not be used in this case.
+or certificate request.
+So this excludes the \fB\-in\fR and \fB\-req\fR options.
 Instead, the \fB\-subj\fR option needs to be given.
 The public key to include can be given with the \fB\-force_pubkey\fR option
 and defaults to the key given with the \fB\-key\fR (or \fB\-signkey\fR) option,
@@ -302,9 +303,7 @@ the new certificate or certificate request, resulting in a self-signature.
 .Sp
 This option cannot be used in conjunction with the \fB\-CA\fR option.
 .Sp
-It sets the issuer name to the subject name (i.e., makes it self-issued)
-and changes the public key to the supplied value (unless overridden
-by \fB\-force_pubkey\fR).
+It sets the issuer name to the subject name (i.e., makes it self-issued).
 Unless the \fB\-preserve_dates\fR option is supplied,
 it sets the validity start date to the current time
 and the end date to a value determined by the \fB\-days\fR option.
@@ -480,19 +479,21 @@ Example:
 .Sp
 \&\f(CW\*(C`/DC=org/DC=OpenSSL/DC=users/UID=123456+CN=John Doe\*(C'\fR
 .Sp
-This option can be used in conjunction with the \fB\-force_pubkey\fR option
-to create a certificate even without providing an input certificate
-or certificate request.
+This option can be used with the \fB\-new\fR and \fB\-force_pubkey\fR options to create
+a new certificate without providing an input certificate or certificate request.
 .IP "\fB\-force_pubkey\fR \fIfilename\fR" 4
 .IX Item "-force_pubkey filename"
-When a certificate is created set its public key to the key in \fIfilename\fR
+When a new certificate or certificate request is created
+set its public key to the given key
 instead of the key contained in the input
 or given with the \fB\-key\fR (or \fB\-signkey\fR) option.
+If the input contains no public key but a private key, its public part is used.
 .Sp
-This option is useful for creating self-issued certificates that are not
+This option can be used in conjunction with b<\-new> and \fB\-subj\fR
+to directly generate a certificate containing any desired public key.
+.Sp
+This option is also useful for creating self-issued certificates that are not
 self-signed, for instance when the key cannot be used for signing, such as \s-1DH.\s0
-It can also be used in conjunction with \fB\-new\fR and \fB\-subj\fR to directly
-generate a certificate containing any desired public key.
 .IP "\fB\-clrext\fR" 4
 .IX Item "-clrext"
 When transforming a certificate to a new certificate

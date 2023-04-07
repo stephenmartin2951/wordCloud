@@ -32,7 +32,9 @@
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
-<p>OSSL_sleep() is a convenience function to delay execution of the calling thread for (at least) <i>millis</i> milliseconds. The delay is not guaranteed; it may be affected by system activity, by the time spent processing the call or by system timer granularity.</p>
+<p>OSSL_sleep() is a convenience function to delay execution of the calling thread for (at least) <i>millis</i> milliseconds. The delay is not guaranteed; it may be affected by system activity, by the time spent processing the call, limitation on the underlying system call parameter size or by system timer granularity.</p>
+
+<p>In particular on Windows the maximum amount of time it will sleep is 49 days and on systems where the regular sleep(3) is used as the underlying system call the maximum sleep time is about 136 years.</p>
 
 <h1 id="RETURN-VALUES">RETURN VALUES</h1>
 

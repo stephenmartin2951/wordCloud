@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_SM3 3ossl"
-.TH EVP_SM3 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH EVP_SM3 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -155,6 +155,12 @@ EVP_sm3
 .IP "\fBEVP_sm3()\fR" 4
 .IX Item "EVP_sm3()"
 The \s-1SM3\s0 hash function.
+.SH "NOTES"
+.IX Header "NOTES"
+Developers should be aware of the negative performance implications of
+calling this function multiple times and should consider using
+\&\fBEVP_MD_fetch\fR\|(3) instead.
+See \*(L"Performance\*(R" in \fBcrypto\fR\|(7) for further information.
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 These functions return a \fB\s-1EVP_MD\s0\fR structure that contains the

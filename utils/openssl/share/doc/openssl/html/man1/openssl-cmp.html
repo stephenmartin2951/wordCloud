@@ -761,7 +761,7 @@
 <dt id="reqin-filenames"><b>-reqin</b> <i>filenames</i></dt>
 <dd>
 
-<p>Take sequence of CMP requests from file(s).</p>
+<p>Take the sequence of CMP requests to send to the server from file(s). This option is ignored if the <b>-rspin</b> option is given because in the latter case no requests are actually sent. Except for first request, the client needs to update the recipNonce field in any further request in order to satisfy the checks to be performed by the server. This causes re-protection (if protecting requests is required).</p>
 
 <p>Multiple filenames may be given, separated by commas and/or whitespace (where in the latter case the whole argument must be enclosed in &quot;...&quot;). As many files are read as needed for a complete transaction.</p>
 
@@ -769,13 +769,13 @@
 <dt id="reqin_new_tid"><b>-reqin_new_tid</b></dt>
 <dd>
 
-<p>Use a fresh transactionID for CMP request messages read using <b>-reqin</b>, which requires re-protecting them as far as they were protected before. This may be needed in case the sequence of requests is reused and the CMP server complains that the transaction ID has already been used.</p>
+<p>Use a fresh transactionID for CMP request messages read using <b>-reqin</b>, which causes their reprotection (if protecting requests is required). This may be needed in case the sequence of requests is reused and the CMP server complains that the transaction ID has already been used.</p>
 
 </dd>
 <dt id="reqout-filenames"><b>-reqout</b> <i>filenames</i></dt>
 <dd>
 
-<p>Save sequence of CMP requests to file(s).</p>
+<p>Save the sequence of CMP requests created by the client to file(s). These requests are not sent to the server if the <b>-reqin</b> option is used, too.</p>
 
 <p>Multiple filenames may be given, separated by commas and/or whitespace. As many files are written as needed to store the complete transaction.</p>
 
@@ -783,7 +783,7 @@
 <dt id="rspin-filenames"><b>-rspin</b> <i>filenames</i></dt>
 <dd>
 
-<p>Process sequence of CMP responses provided in file(s), skipping server. This excludes <i>-server</i>, <i>-port</i>, and <i>-use_mock_srv</i>.</p>
+<p>Process the sequence of CMP responses provided in file(s), skipping server. This excludes <i>-server</i>, <i>-port</i>, and <i>-use_mock_srv</i>.</p>
 
 <p>Multiple filenames may be given, separated by commas and/or whitespace. As many files are read as needed for the complete transaction.</p>
 
@@ -791,7 +791,7 @@
 <dt id="rspout-filenames"><b>-rspout</b> <i>filenames</i></dt>
 <dd>
 
-<p>Save sequence of CMP responses to file(s).</p>
+<p>Save the sequence of received CMP responses to file(s).</p>
 
 <p>Multiple filenames may be given, separated by commas and/or whitespace. As many files are written as needed to store the complete transaction.</p>
 

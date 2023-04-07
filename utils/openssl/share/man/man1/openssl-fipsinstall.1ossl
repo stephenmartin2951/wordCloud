@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-FIPSINSTALL 1ossl"
-.TH OPENSSL-FIPSINSTALL 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-FIPSINSTALL 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -156,6 +156,8 @@ openssl\-fipsinstall \- perform FIPS configuration installation
 [\fB\-quiet\fR]
 [\fB\-no_conditional_errors\fR]
 [\fB\-no_security_checks\fR]
+[\fB\-ems_check\fR]
+[\fB\-no_drbg_truncated_digests\fR]
 [\fB\-self_test_onload\fR]
 [\fB\-self_test_oninstall\fR]
 [\fB\-corrupt_desc\fR \fIselftest_description\fR]
@@ -278,6 +280,18 @@ fails as described above.
 .IP "\fB\-no_security_checks\fR" 4
 .IX Item "-no_security_checks"
 Configure the module to not perform run-time security checks as described above.
+.Sp
+Enabling the configuration option \*(L"no-fips-securitychecks\*(R" provides another way to
+turn off the check at compile time.
+.IP "\fB\-ems_check\fR" 4
+.IX Item "-ems_check"
+Configure the module to enable a run-time Extended Master Secret (\s-1EMS\s0) check
+when using the \s-1TLS1_PRF KDF\s0 algorithm. This check is disabled by default.
+See \s-1RFC 7627\s0 for information related to \s-1EMS.\s0
+.IP "\fB\-no_drbg_truncated_digests\fR" 4
+.IX Item "-no_drbg_truncated_digests"
+Configure the module to not allow truncated digests to be used with Hash and
+\&\s-1HMAC\s0 DRBGs.  See \s-1FIPS 140\-3 IG D.R\s0 for details.
 .IP "\fB\-self_test_onload\fR" 4
 .IX Item "-self_test_onload"
 Do not write the two fields related to the \*(L"test status indicator\*(R" and

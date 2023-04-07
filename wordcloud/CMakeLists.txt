@@ -1,7 +1,7 @@
-set(OPENSSL_ROOT_DIR "/home/runner/Special-Team-Bloom-Filter-comp-339-439-ds/utils/openssl")
+set(OPENSSL_ROOT_DIR "${WordCloud_SOURCE_DIR}/utils/openssl")
 set(OPENSSL_INCLUDE_DIR "${OPENSSL_ROOT_DIR}/include")
 set(OPENSSL_LIBRARY_DIR "${OPENSSL_ROOT_DIR}/lib64")
-set(BLOOM_ROOT_DIR "/home/runner/Special-Team-Bloom-Filter-comp-339-439-ds/bloom")
+set(BLOOM_ROOT_DIR "${WordCloud_SOURCE_DIR}/bloom")
 
 add_executable(
   wordcloud

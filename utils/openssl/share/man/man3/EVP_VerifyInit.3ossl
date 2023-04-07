@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_VERIFYINIT 3ossl"
-.TH EVP_VERIFYINIT 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH EVP_VERIFYINIT 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -197,11 +197,18 @@ transparent to the algorithm used and much more flexible.
 .PP
 The call to \fBEVP_VerifyFinal()\fR internally finalizes a copy of the digest context.
 This means that calls to \fBEVP_VerifyUpdate()\fR and \fBEVP_VerifyFinal()\fR can be called
-later to digest and verify additional data.
+later to digest and verify additional data. Applications may disable this
+behavior by setting the \s-1EVP_MD_CTX_FLAG_FINALISE\s0 context flag via
+\&\fBEVP_MD_CTX_set_flags\fR\|(3).
 .PP
 Since only a copy of the digest context is ever finalized the context must
 be cleaned up after use by calling \fBEVP_MD_CTX_free()\fR or a memory leak
 will occur.
+.PP
+Note that not all providers support continuation, in case the selected
+provider does not allow to duplicate contexts \fBEVP_VerifyFinal()\fR will
+finalize the digest context and attempting to process additional data via
+\&\fBEVP_VerifyUpdate()\fR will result in an error.
 .SH "BUGS"
 .IX Header "BUGS"
 Older versions of this documentation wrongly stated that calls to

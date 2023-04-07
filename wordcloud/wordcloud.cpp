@@ -43,7 +43,7 @@ string hash_lookup(string& hashvalue)
   fstream fin;
   vector<string> row;
   string hashLineRead, line;
-  fin.open("/home/runner/Special-Team-Bloom-Filter-comp-339-439-ds/utils/hashtable.csv", ios::in);
+  fin.open("hashtable.csv", ios::in);
   while(getline(fin, hashLineRead) && count == 0){
     row.clear();
     stringstream s(hashLineRead);
@@ -91,7 +91,7 @@ void word_cloud()
   	fstream inputfile;
     queue<string> wordCloud;
   	string lineRead;	
-    string fileLocation = "/home/runner/Special-Team-Bloom-Filter-comp-339-439-ds/hamlet.txt";
+    string fileLocation = "reducedhamlet.txt";
   	inputfile.open(fileLocation, ios::in);
     while(getline(inputfile, lineRead))
       {

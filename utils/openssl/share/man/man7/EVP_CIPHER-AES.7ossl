@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_CIPHER-AES 7ossl"
-.TH EVP_CIPHER-AES 7ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH EVP_CIPHER-AES 7ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -166,9 +166,6 @@ default provider:
 .ie n .IP """\s-1AES\-192\-OFB"", ""AES\-128\-OFB""\s0 and ""\s-1AES\-256\-OFB""\s0" 4
 .el .IP "``\s-1AES\-192\-OFB'', ``AES\-128\-OFB''\s0 and ``\s-1AES\-256\-OFB''\s0" 4
 .IX Item "AES-192-OFB, AES-128-OFB and AES-256-OFB"
-.ie n .IP """\s-1AES\-128\-GCM\-SIV"", ""AES\-192\-GCM\-SIV""\s0 and ""\s-1AES\-256\-GCM\-SIV""\s0" 4
-.el .IP "``\s-1AES\-128\-GCM\-SIV'', ``AES\-192\-GCM\-SIV''\s0 and ``\s-1AES\-256\-GCM\-SIV''\s0" 4
-.IX Item "AES-128-GCM-SIV, AES-192-GCM-SIV and AES-256-GCM-SIV"
 .ie n .IP """\s-1AES\-128\-XTS""\s0 and ""\s-1AES\-256\-XTS""\s0" 4
 .el .IP "``\s-1AES\-128\-XTS''\s0 and ``\s-1AES\-256\-XTS''\s0" 4
 .IX Item "AES-128-XTS and AES-256-XTS"
@@ -195,6 +192,9 @@ The following algorithms are available in the default provider, but not the
 .ie n .IP """\s-1AES\-128\-SIV"", ""AES\-192\-SIV""\s0 and ""\s-1AES\-256\-SIV""\s0" 4
 .el .IP "``\s-1AES\-128\-SIV'', ``AES\-192\-SIV''\s0 and ``\s-1AES\-256\-SIV''\s0" 4
 .IX Item "AES-128-SIV, AES-192-SIV and AES-256-SIV"
+.ie n .IP """\s-1AES\-128\-GCM\-SIV"", ""AES\-192\-GCM\-SIV""\s0 and ""\s-1AES\-256\-GCM\-SIV""\s0" 4
+.el .IP "``\s-1AES\-128\-GCM\-SIV'', ``AES\-192\-GCM\-SIV''\s0 and ``\s-1AES\-256\-GCM\-SIV''\s0" 4
+.IX Item "AES-128-GCM-SIV, AES-192-GCM-SIV and AES-256-GCM-SIV"
 .PD
 .SS "Parameters"
 .IX Subsection "Parameters"

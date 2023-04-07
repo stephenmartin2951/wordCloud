@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-S_CLIENT 1ossl"
-.TH OPENSSL-S_CLIENT 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-S_CLIENT 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -187,6 +187,7 @@ openssl\-s_client \- SSL/TLS client program
 [\fB\-debug\fR]
 [\fB\-trace\fR]
 [\fB\-nocommands\fR]
+[\fB\-adv\fR]
 [\fB\-security_debug\fR]
 [\fB\-security_debug_verbose\fR]
 [\fB\-msg\fR]
@@ -348,6 +349,8 @@ openssl\-s_client \- SSL/TLS client program
 [\fB\-verify_name\fR \fIname\fR]
 [\fB\-x509_strict\fR]
 [\fB\-issuer_checks\fR]
+[\fB\-enable_server_rpk\fR]
+[\fB\-enable_client_rpk\fR]
 [\fIhost\fR:\fIport\fR]
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
@@ -609,6 +612,9 @@ Print extensive debugging information including a hex dump of all traffic.
 .IP "\fB\-nocommands\fR" 4
 .IX Item "-nocommands"
 Do not use interactive command letters.
+.IP "\fB\-adv\fR" 4
+.IX Item "-adv"
+Use advanced command mode.
 .IP "\fB\-security_debug\fR" 4
 .IX Item "-security_debug"
 Enable security debug messages.
@@ -953,33 +959,91 @@ See \*(L"Verification Options\*(R" in \fBopenssl\-verification\-options\fR\|(1) 
 .Sp
 Verification errors are displayed, for debugging, but the command will
 proceed unless the \fB\-verify_return_error\fR option is used.
+.IP "\fB\-enable_server_rpk\fR" 4
+.IX Item "-enable_server_rpk"
+Enable support for receiving raw public keys (\s-1RFC7250\s0) from the server.
+Use of X.509 certificates by the server becomes optional, and servers that
+support raw public keys may elect to use them.
+Servers that don't support raw public keys or prefer to use X.509
+certificates can still elect to send X.509 certificates as usual.
+.IP "\fB\-enable_client_rpk\fR" 4
+.IX Item "-enable_client_rpk"
+Enable support for sending raw public keys (\s-1RFC7250\s0) to the server.
+A raw public key will be sent by the client, if solicited by the server,
+provided a suitable key and public certificate pair is configured.
+Some servers may nevertheless not request any client credentials,
+or may request a certificate.
 .IP "\fIhost\fR:\fIport\fR" 4
 .IX Item "host:port"
 Rather than providing \fB\-connect\fR, the target hostname and optional port may
 be provided as a single positional argument after all options. If neither this
 nor \fB\-connect\fR are provided, falls back to attempting to connect to
 \&\fIlocalhost\fR on port \fI4433\fR.
-.SH "CONNECTED COMMANDS"
-.IX Header "CONNECTED COMMANDS"
-If a connection is established with an \s-1SSL\s0 server then any data received
+.SH "CONNECTED COMMANDS (BASIC)"
+.IX Header "CONNECTED COMMANDS (BASIC)"
+If a connection is established with an \s-1SSL/TLS\s0 server then any data received
 from the server is displayed and any key presses will be sent to the
-server. If end of file is reached then the connection will be closed down. When
-used interactively (which means neither \fB\-quiet\fR nor \fB\-ign_eof\fR have been
-given), then certain commands are also recognized which perform special
-operations. These commands are a letter which must appear at the start of a
-line. They are listed below.
+server. If end of file is reached then the connection will be closed down.
+.PP
+When used interactively (which means neither \fB\-quiet\fR nor \fB\-ign_eof\fR have been
+given), and neither of \fB\-adv\fR or \fB\-nocommands\fR are given then \*(L"Basic\*(R" command
+mode is entered. In this mode certain commands are recognized which perform
+special operations. These commands are a letter which must appear at the start
+of a line. All further data after the initial letter on the line is ignored.
+The commands are listed below.
 .IP "\fBQ\fR" 4
 .IX Item "Q"
 End the current \s-1SSL\s0 connection and exit.
 .IP "\fBR\fR" 4
 .IX Item "R"
 Renegotiate the \s-1SSL\s0 session (TLSv1.2 and below only).
+.IP "\fBC\fR" 4
+.IX Item "C"
+Attempt to reconnect to the server using a resumption handshake.
 .IP "\fBk\fR" 4
 .IX Item "k"
 Send a key update message to the server (TLSv1.3 only)
 .IP "\fBK\fR" 4
 .IX Item "K"
 Send a key update message to the server and request one back (TLSv1.3 only)
+.SH "CONNECTED COMMANDS (ADVANCED)"
+.IX Header "CONNECTED COMMANDS (ADVANCED)"
+If \fB\-adv\fR has been given then \*(L"advanced\*(R" command mode is entered. As with basic
+mode, if a connection is established with an \s-1SSL/TLS\s0 server then any data
+received from the server is displayed and any key presses will be sent to the
+server. If end of file is reached then the connection will be closed down.
+.PP
+Special commands can be supplied by enclosing them in braces, e.g. \*(L"{help}\*(R" or
+\&\*(L"{quit}\*(R". These commands can appear anywhere in the text entered into s_client,
+but they are not sent to the server. Some commands can take an argument by
+ending the command name with \*(L":\*(R" and then providing the argument, e.g.
+\&\*(L"{keyup:req}\*(R". Some commands are only available when certain protocol versions
+have been negotiated.
+.PP
+If a newline appears at the end of a line entered into s_client then this is
+also sent to the server. If a command appears on a line on its own with no other
+text on the same line, then the newline is suppressed and not sent to the
+server.
+.PP
+The following commands are recognised.
+.IP "\fBhelp\fR" 4
+.IX Item "help"
+Prints out summary help text about the available commands.
+.IP "\fBquit\fR" 4
+.IX Item "quit"
+Close the connection to the peer
+.IP "\fBreconnect\fR" 4
+.IX Item "reconnect"
+Reconnect to the peer and attempt a resumption handshake
+.IP "\fBkeyup\fR" 4
+.IX Item "keyup"
+Send a Key Update message. TLSv1.3 only. This command takes an optional
+argument. If the argument \*(L"req\*(R" is supplied then the peer is also requested to
+update its keys. Otherwise if \*(L"noreq\*(R" is supplied the the peer is not requested
+to update its keys. The default is \*(L"req\*(R".
+.IP "\fBreneg\fR" 4
+.IX Item "reneg"
+Initiate a renegotiation with the server. (D)TLSv1.2 or below only.
 .SH "NOTES"
 .IX Header "NOTES"
 This command can be used to debug \s-1SSL\s0 servers. To connect to an \s-1SSL HTTP\s0
@@ -1055,11 +1119,16 @@ The \fB\-certform\fR option has become obsolete in OpenSSL 3.0.0 and has no effe
 .PP
 The \fB\-engine\fR option was deprecated in OpenSSL 3.0.
 .PP
-The \fB\-tfo\fR, \fB\-no_tx_cert_comp\fR, and \fB\-no_rx_cert_comp\fR options were added
-in OpenSSL 3.2.
+The
+\&\fB\-enable_client_rpk\fR,
+\&\fB\-enable_server_rpk\fR,
+\&\fB\-no_rx_cert_comp\fR,
+\&\fB\-no_tx_cert_comp\fR,
+and \fB\-tfo\fR
+options were added in OpenSSL 3.2.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2000\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2000\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

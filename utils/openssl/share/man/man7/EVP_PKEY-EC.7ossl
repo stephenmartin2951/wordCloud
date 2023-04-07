@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_PKEY-EC 7ossl"
-.TH EVP_PKEY-EC 7ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH EVP_PKEY-EC 7ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -282,8 +282,9 @@ Used for getting the \s-1EC\s0 public key X component.
 .el .IP "``qy'' (\fB\s-1OSSL_PKEY_PARAM_EC_PUB_Y\s0\fR) <unsigned integer>" 4
 .IX Item "qy (OSSL_PKEY_PARAM_EC_PUB_Y) <unsigned integer>"
 Used for getting the \s-1EC\s0 public key Y component.
-.IP "(\fB\s-1OSSL_PKEY_PARAM_DEFAULT_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
-.IX Item "(OSSL_PKEY_PARAM_DEFAULT_DIGEST) <UTF8 string>"
+.ie n .IP """default-digest"" (\fB\s-1OSSL_PKEY_PARAM_DEFAULT_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
+.el .IP "``default-digest'' (\fB\s-1OSSL_PKEY_PARAM_DEFAULT_DIGEST\s0\fR) <\s-1UTF8\s0 string>" 4
+.IX Item "default-digest (OSSL_PKEY_PARAM_DEFAULT_DIGEST) <UTF8 string>"
 Getter that returns the default digest name.
 (Currently returns \*(L"\s-1SHA256\*(R"\s0 as of OpenSSL 3.0).
 .ie n .IP """dhkem-ikm"" (\fB\s-1OSSL_PKEY_PARAM_DHKEM_IKM\s0\fR) <octet string>" 4

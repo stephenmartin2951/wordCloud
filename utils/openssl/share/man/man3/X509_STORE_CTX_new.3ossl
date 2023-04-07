@@ -133,19 +133,23 @@
 .\" ========================================================================
 .\"
 .IX Title "X509_STORE_CTX_NEW 3ossl"
-.TH X509_STORE_CTX_NEW 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH X509_STORE_CTX_NEW 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
 .nh
 .SH "NAME"
 X509_STORE_CTX_new_ex, X509_STORE_CTX_new, X509_STORE_CTX_cleanup,
-X509_STORE_CTX_free, X509_STORE_CTX_init, X509_STORE_CTX_set0_trusted_stack,
+X509_STORE_CTX_free, X509_STORE_CTX_init,
+X509_STORE_CTX_init_rpk,
+X509_STORE_CTX_set0_trusted_stack,
 X509_STORE_CTX_set_cert, X509_STORE_CTX_set0_crls,
+X509_STORE_CTX_set0_rpk,
 X509_STORE_CTX_get0_param, X509_STORE_CTX_set0_param,
 X509_STORE_CTX_get0_untrusted, X509_STORE_CTX_set0_untrusted,
 X509_STORE_CTX_get_num_untrusted,
 X509_STORE_CTX_get0_chain, X509_STORE_CTX_set0_verified_chain,
+X509_STORE_CTX_get0_rpk,
 X509_STORE_CTX_set_default,
 X509_STORE_CTX_set_verify,
 X509_STORE_CTX_verify_fn,
@@ -165,11 +169,14 @@ X509_STORE_CTX_purpose_inherit
 \&
 \& int X509_STORE_CTX_init(X509_STORE_CTX *ctx, X509_STORE *trust_store,
 \&                         X509 *target, STACK_OF(X509) *untrusted);
+\& int X509_STORE_CTX_init_rpk(X509_STORE_CTX *ctx, X509_STORE *trust_store,
+\&                             EVP_PKEY *rpk);
 \&
 \& void X509_STORE_CTX_set0_trusted_stack(X509_STORE_CTX *ctx, STACK_OF(X509) *sk);
 \&
 \& void X509_STORE_CTX_set_cert(X509_STORE_CTX *ctx, X509 *target);
 \& void X509_STORE_CTX_set0_crls(X509_STORE_CTX *ctx, STACK_OF(X509_CRL) *sk);
+\& void X509_STORE_CTX_set0_rpk(X509_STORE_CTX *ctx, EVP_PKEY *target);
 \&
 \& X509_VERIFY_PARAM *X509_STORE_CTX_get0_param(const X509_STORE_CTX *ctx);
 \& void X509_STORE_CTX_set0_param(X509_STORE_CTX *ctx, X509_VERIFY_PARAM *param);
@@ -180,6 +187,7 @@ X509_STORE_CTX_purpose_inherit
 \& int X509_STORE_CTX_get_num_untrusted(const X509_STORE_CTX *ctx);
 \& STACK_OF(X509) *X509_STORE_CTX_get0_chain(const X509_STORE_CTX *ctx);
 \& void X509_STORE_CTX_set0_verified_chain(X509_STORE_CTX *ctx, STACK_OF(X509) *chain);
+\& EVP_PKEY *X509_STORE_CTX_get0_rpk(const X509_STORE_CTX *ctx);
 \&
 \& int X509_STORE_CTX_set_default(X509_STORE_CTX *ctx, const char *name);
 \& typedef int (*X509_STORE_CTX_verify_fn)(X509_STORE_CTX *);
@@ -222,6 +230,8 @@ they are provided simply as a list using \fBX509_STORE_CTX_set0_trusted_stack()\
 The certificate to be verified is set to \fItarget\fR,
 and a list of additional certificates may be provided in \fIuntrusted\fR,
 which will be untrusted but may be used to build the chain.
+The \fItarget\fR certificate is not copied (its reference count is not updated),
+and the caller must not free it before verification is complete.
 Each of the \fItrust_store\fR, \fItarget\fR and \fIuntrusted\fR parameters can be \s-1NULL.\s0
 Yet note that \fBX509_verify_cert\fR\|(3) and \fBX509_STORE_CTX_verify\fR\|(3)
 will need a verification target.
@@ -230,6 +240,14 @@ For \fBX509_STORE_CTX_verify\fR\|(3), which takes by default the first element o
 list of untrusted certificates as its verification target,
 this can be also set indirectly using \fBX509_STORE_CTX_set0_untrusted()\fR.
 .PP
+\&\fBX509_STORE_CTX_init_rpk()\fR sets up \fIctx\fR for a subsequent verification
+operation for the \fItarget\fR raw public key.
+It behaves similarly to \fBX509_STORE_CTX_init()\fR.
+The \fItarget\fR raw public key can aslo be supplied separately, via
+\&\fBX509_STORE_CTX_set0_rpk()\fR.
+The \fItarget\fR public key is not copied (its reference count is not updated),
+and the caller must not free it before verification is complete.
+.PP
 \&\fBX509_STORE_CTX_set0_trusted_stack()\fR sets the set of trusted certificates of
 \&\fIctx\fR to \fIsk\fR. This is an alternative way of specifying trusted certificates
 instead of using an \fBX509_STORE\fR where its complexity is not needed
@@ -237,6 +255,14 @@ or to make sure that only the given set \fIsk\fR of certificates are trusted.
 .PP
 \&\fBX509_STORE_CTX_set_cert()\fR sets the target certificate to be verified in \fIctx\fR
 to \fItarget\fR.
+The target certificate is not copied (its reference count is not updated),
+and the caller must not free it before verification is complete.
+.PP
+\&\fBX509_STORE_CTX_set0_rpk()\fR sets the target raw public key to be verified in \fIctx\fR
+to \fItarget\fR, a non-NULL raw public key preempts any target certificate, which
+is then ignored.
+The \fItarget\fR public key is not copied (its reference count is not updated),
+and the caller must not free it before verification is complete.
 .PP
 \&\fBX509_STORE_CTX_set0_verified_chain()\fR sets the validated chain to \fIchain\fR.
 Ownership of the chain is transferred to \fIctx\fR,
@@ -244,6 +270,9 @@ and so it should not be free'd by the caller.
 .PP
 \&\fBX509_STORE_CTX_get0_chain()\fR returns the internal pointer used by the
 \&\fIctx\fR that contains the constructed (output) chain.
+.PP
+\&\fBX509_STORE_CTX_get0_rpk()\fR returns the internal pointer used by the
+\&\fIctx\fR that contains the raw public key.
 .PP
 \&\fBX509_STORE_CTX_set0_crls()\fR sets a set of CRLs to use to aid certificate
 verification to \fIsk\fR. These CRLs will only be used if \s-1CRL\s0 verification is
@@ -383,10 +412,14 @@ should be made or reference counts increased instead.
 \&\fBX509_STORE_CTX_new()\fR returns a newly allocated context or \s-1NULL\s0 if an
 error occurred.
 .PP
-\&\fBX509_STORE_CTX_init()\fR returns 1 for success or 0 if an error occurred.
+\&\fBX509_STORE_CTX_init()\fR and \fBX509_STORE_CTX_init_rpk()\fR return 1 for success
+or 0 if an error occurred.
 .PP
 \&\fBX509_STORE_CTX_get0_param()\fR returns a pointer to an \fBX509_VERIFY_PARAM\fR
 structure or \s-1NULL\s0 if an error occurred.
+.PP
+\&\fBX509_STORE_CTX_get0_rpk()\fR returns a pointer to an \fB\s-1EVP_PKEY\s0\fR structure if
+present, or \s-1NULL\s0 if absent.
 .PP
 \&\fBX509_STORE_CTX_cleanup()\fR, \fBX509_STORE_CTX_free()\fR,
 \&\fBX509_STORE_CTX_set0_trusted_stack()\fR,
@@ -407,11 +440,13 @@ used.
 The \fBX509_STORE_CTX_set0_crls()\fR function was added in OpenSSL 1.0.0.
 The \fBX509_STORE_CTX_get_num_untrusted()\fR function was added in OpenSSL 1.1.0.
 The \fBX509_STORE_CTX_new_ex()\fR function was added in OpenSSL 3.0.
+The \fBX509_STORE_CTX_init_rpk()\fR, \fBX509_STORE_CTX_get0_rpk()\fR, and
+\&\fBX509_STORE_CTX_set0_rpk()\fR functions were added in OpenSSL 3.2.
 .PP
 There is no need to call \fBX509_STORE_CTX_cleanup()\fR explicitly since OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2009\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2009\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

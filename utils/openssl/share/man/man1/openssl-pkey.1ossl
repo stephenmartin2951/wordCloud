@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-PKEY 1ossl"
-.TH OPENSSL-PKEY 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-PKEY 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -218,7 +218,8 @@ see \fBopenssl\-passphrase\-options\fR\|(1).
 .IP "\fB\-pubin\fR" 4
 .IX Item "-pubin"
 By default a private key is read from the input.
-With this option only the public components are read.
+With this option a public key is read instead.
+If the input contains no public key but a private key, its public part is used.
 .SS "Output options"
 .IX Subsection "Output options"
 .IP "\fB\-out\fR \fIfilename\fR" 4

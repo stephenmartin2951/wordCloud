@@ -64,7 +64,7 @@
                               OSSL_PASSPHRASE_CALLBACK *cb, void *cbarg);
 
  /* Functions to export a decoded object */
- void *OSSL_FUNC_decoder_export_object(void *ctx,
+ int OSSL_FUNC_decoder_export_object(void *ctx,
                                        const void *objref, size_t objref_sz,
                                        OSSL_CALLBACK *export_cb,
                                        void *export_cbarg);</code></pre>
@@ -90,7 +90,7 @@
                                    int selection,
                                    OSSL_CALLBACK *data_cb, void *data_cbarg,
                                    OSSL_PASSPHRASE_CALLBACK *cb, void *cbarg);
- static ossl_inline OSSL_FUNC_decoder_decode_fn
+ static ossl_inline OSSL_FUNC_decoder_decode_fn*
      OSSL_FUNC_decoder_decode(const OSSL_DISPATCH *opf);</code></pre>
 
 <p><a href="../man3/OSSL_DISPATCH.html">OSSL_DISPATCH(3)</a> arrays are indexed by numbers that are provided as macros in <a href="../man7/openssl-core_dispatch.h.html">openssl-core_dispatch.h(7)</a>, as follows:</p>

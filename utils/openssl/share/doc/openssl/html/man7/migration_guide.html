@@ -38,6 +38,7 @@
               <li><a href="#HTTP-S-client">HTTP(S) client</a></li>
               <li><a href="#Key-Derivation-Function-API-EVP_KDF">Key Derivation Function API (EVP_KDF)</a></li>
               <li><a href="#Message-Authentication-Code-API-EVP_MAC">Message Authentication Code API (EVP_MAC)</a></li>
+              <li><a href="#Algorithm-Fetching">Algorithm Fetching</a></li>
               <li><a href="#Support-for-Linux-Kernel-TLS">Support for Linux Kernel TLS</a></li>
               <li><a href="#New-Algorithms">New Algorithms</a></li>
               <li><a href="#CMS-and-PKCS-7-updates">CMS and PKCS#7 updates</a></li>
@@ -115,6 +116,7 @@
             </ul>
           </li>
           <li><a href="#Deprecated-function-mappings">Deprecated function mappings</a></li>
+          <li><a href="#NID-handling-for-provided-keys-and-algorithms">NID handling for provided keys and algorithms</a></li>
         </ul>
       </li>
       <li><a href="#Using-the-FIPS-Module-in-applications">Using the FIPS Module in applications</a></li>
@@ -253,6 +255,10 @@
 <p>This includes a generic EVP_PKEY to EVP_MAC bridge, to facilitate the continued use of MACs through raw private keys in functionality such as <a href="../man3/EVP_DigestSign.html">EVP_DigestSign(3)</a> and <a href="../man3/EVP_DigestVerify.html">EVP_DigestVerify(3)</a>.</p>
 
 <p>All new applications should use the new <a href="../man3/EVP_MAC.html">EVP_MAC(3)</a> interface. See also <a href="../man7/OSSL_PROVIDER-default.html">&quot;Message Authentication Code (MAC)&quot; in OSSL_PROVIDER-default(7)</a> and <a href="../man7/OSSL_PROVIDER-FIPS.html">&quot;Message Authentication Code (MAC)&quot; in OSSL_PROVIDER-FIPS(7)</a>.</p>
+
+<h4 id="Algorithm-Fetching">Algorithm Fetching</h4>
+
+<p>Using calls to convenience functions such as EVP_sha256() and EVP_aes_256_gcm() may incur a performance penalty when using providers. Retrieving algorithms from providers involves searching for an algorithm by name. This is much slower than directly accessing a method table. It is recommended to prefetch algorithms if an algorithm is used many times. See <a href="../man7/crypto.html">&quot;Performance&quot; in crypto(7)</a>, <a href="../man7/crypto.html">&quot;Explicit fetching&quot; in crypto(7)</a> and <a href="../man7/crypto.html">&quot;Implicit fetching&quot; in crypto(7)</a>.</p>
 
 <h4 id="Support-for-Linux-Kernel-TLS">Support for Linux Kernel TLS</h4>
 
@@ -1563,6 +1569,19 @@
 <li><p>X509_http_nbio(), X509_CRL_http_nbio()</p>
 
 <p>Use <a href="../man3/X509_load_http.html">X509_load_http(3)</a> and <a href="../man3/X509_CRL_load_http.html">X509_CRL_load_http(3)</a> instead.</p>
+
+</li>
+</ul>
+
+<h3 id="NID-handling-for-provided-keys-and-algorithms">NID handling for provided keys and algorithms</h3>
+
+<p>The following functions for NID (numeric id) handling have changed semantics.</p>
+
+<ul>
+
+<li><p>EVP_PKEY_id(), EVP_PKEY_get_id()</p>
+
+<p>This function was previously used to reliably return the NID of an EVP_PKEY object, e.g., to look up the name of the algorithm of such EVP_PKEY by calling <a href="../man3/OBJ_nid2sn.html">OBJ_nid2sn(3)</a>. With the introduction of <a href="../man7/provider.html">provider(7)</a>s EVP_PKEY_id() or its new equivalent <a href="../man3/EVP_PKEY_get_id.html">EVP_PKEY_get_id(3)</a> might now also return the value -1 (<b>EVP_PKEY_KEYMGMT</b>) indicating the use of a provider to implement the EVP_PKEY object. Therefore, the use of <a href="../man3/EVP_PKEY_get0_type_name.html">EVP_PKEY_get0_type_name(3)</a> is recommended for retrieving the name of the EVP_PKEY algorithm.</p>
 
 </li>
 </ul>

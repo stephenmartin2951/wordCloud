@@ -1,4 +1,4 @@
-prefix=/home/runner/Caesar-Cipher-1-comp-339-439-ds-5/bloom/utils/openssl
+prefix=/home/u189940/wordCloud/utils/openssl
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib64
 includedir=${prefix}/include

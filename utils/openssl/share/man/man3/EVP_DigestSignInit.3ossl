@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "EVP_DIGESTSIGNINIT 3ossl"
-.TH EVP_DIGESTSIGNINIT 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH EVP_DIGESTSIGNINIT 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -289,6 +289,13 @@ external circumstances (see \s-1\fBRAND\s0\fR\|(7)), the operation will fail.
 The call to \fBEVP_DigestSignFinal()\fR internally finalizes a copy of the digest
 context. This means that calls to \fBEVP_DigestSignUpdate()\fR and
 \&\fBEVP_DigestSignFinal()\fR can be called later to digest and sign additional data.
+Applications may disable this behavior by setting the \s-1EVP_MD_CTX_FLAG_FINALISE\s0
+context flag via \fBEVP_MD_CTX_set_flags\fR\|(3).
+.PP
+Note that not all providers support continuation, in case the selected
+provider does not allow to duplicate contexts \fBEVP_DigestSignFinal()\fR will
+finalize the digest context and attempting to process additional data via
+\&\fBEVP_DigestSignUpdate()\fR will result in an error.
 .PP
 \&\fBEVP_DigestSignInit()\fR and \fBEVP_DigestSignInit_ex()\fR functions can be called
 multiple times on a context and the parameters set by previous calls should be

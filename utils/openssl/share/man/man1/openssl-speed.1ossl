@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-SPEED 1ossl"
-.TH OPENSSL-SPEED 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-SPEED 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -151,6 +151,8 @@ openssl\-speed \- test library performance
 [\fB\-cmac\fR \fIalgo\fR]
 [\fB\-mb\fR]
 [\fB\-aead\fR]
+[\fB\-kem\-algorithms\fR]
+[\fB\-signature\-algorithms\fR]
 [\fB\-multi\fR \fInum\fR]
 [\fB\-async_jobs\fR \fInum\fR]
 [\fB\-misalign\fR \fInum\fR]
@@ -220,6 +222,12 @@ Enable multi-block mode on EVP-named cipher.
 .IP "\fB\-aead\fR" 4
 .IX Item "-aead"
 Benchmark EVP-named \s-1AEAD\s0 cipher in TLS-like sequence.
+.IP "\fB\-kem\-algorithms\fR" 4
+.IX Item "-kem-algorithms"
+Benchmark \s-1KEM\s0 algorithms: key generation, encapsulation, decapsulation.
+.IP "\fB\-signature\-algorithms\fR" 4
+.IX Item "-signature-algorithms"
+Benchmark signature algorithms: key generation, signature, verification.
 .IP "\fB\-primes\fR \fInum\fR" 4
 .IX Item "-primes num"
 Generate a \fInum\fR\-prime \s-1RSA\s0 key and use it to run the benchmarks. This option
@@ -269,6 +277,8 @@ supported by third party providers with the \f(CW\*(C`openssl speed\*(C'\fR comm
 .SH "HISTORY"
 .IX Header "HISTORY"
 The \fB\-engine\fR option was deprecated in OpenSSL 3.0.
+.PP
+\&\s-1DSA512\s0 was removed in OpenSSL 3.2.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
 Copyright 2000\-2022 The OpenSSL Project Authors. All Rights Reserved.

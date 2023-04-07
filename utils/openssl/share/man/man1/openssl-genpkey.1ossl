@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-GENPKEY 1ossl"
-.TH OPENSSL-GENPKEY 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-GENPKEY 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -213,6 +213,9 @@ Set the public key algorithm option \fIopt\fR to \fIvalue\fR. The precise set of
 options supported depends on the public key algorithm used and its
 implementation. See \*(L"\s-1KEY GENERATION OPTIONS\*(R"\s0 and
 \&\*(L"\s-1PARAMETER GENERATION OPTIONS\*(R"\s0 below for more details.
+.Sp
+To list the possible \fIopt\fR values for an algorithm use:
+\&\fBopenssl\fR \fBgenpkey\fR \-algorithm \s-1XXX\s0 \-help
 .IP "\fB\-genparam\fR" 4
 .IX Item "-genparam"
 Generate a set of parameters instead of a private key. If used this option must

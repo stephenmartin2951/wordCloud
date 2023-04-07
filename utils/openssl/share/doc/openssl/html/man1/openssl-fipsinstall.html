@@ -28,7 +28,7 @@
 
 <h1 id="SYNOPSIS">SYNOPSIS</h1>
 
-<p><b>openssl fipsinstall</b> [<b>-help</b>] [<b>-in</b> <i>configfilename</i>] [<b>-out</b> <i>configfilename</i>] [<b>-module</b> <i>modulefilename</i>] [<b>-provider_name</b> <i>providername</i>] [<b>-section_name</b> <i>sectionname</i>] [<b>-verify</b>] [<b>-mac_name</b> <i>macname</i>] [<b>-macopt</b> <i>nm</i>:<i>v</i>] [<b>-noout</b>] [<b>-quiet</b>] [<b>-no_conditional_errors</b>] [<b>-no_security_checks</b>] [<b>-self_test_onload</b>] [<b>-self_test_oninstall</b>] [<b>-corrupt_desc</b> <i>selftest_description</i>] [<b>-corrupt_type</b> <i>selftest_type</i>] [<b>-config</b> <i>parent_config</i>]</p>
+<p><b>openssl fipsinstall</b> [<b>-help</b>] [<b>-in</b> <i>configfilename</i>] [<b>-out</b> <i>configfilename</i>] [<b>-module</b> <i>modulefilename</i>] [<b>-provider_name</b> <i>providername</i>] [<b>-section_name</b> <i>sectionname</i>] [<b>-verify</b>] [<b>-mac_name</b> <i>macname</i>] [<b>-macopt</b> <i>nm</i>:<i>v</i>] [<b>-noout</b>] [<b>-quiet</b>] [<b>-no_conditional_errors</b>] [<b>-no_security_checks</b>] [<b>-ems_check</b>] [<b>-no_drbg_truncated_digests</b>] [<b>-self_test_onload</b>] [<b>-self_test_oninstall</b>] [<b>-corrupt_desc</b> <i>selftest_description</i>] [<b>-corrupt_type</b> <i>selftest_type</i>] [<b>-config</b> <i>parent_config</i>]</p>
 
 <h1 id="DESCRIPTION">DESCRIPTION</h1>
 
@@ -164,6 +164,20 @@
 <dd>
 
 <p>Configure the module to not perform run-time security checks as described above.</p>
+
+<p>Enabling the configuration option &quot;no-fips-securitychecks&quot; provides another way to turn off the check at compile time.</p>
+
+</dd>
+<dt id="ems_check"><b>-ems_check</b></dt>
+<dd>
+
+<p>Configure the module to enable a run-time Extended Master Secret (EMS) check when using the TLS1_PRF KDF algorithm. This check is disabled by default. See RFC 7627 for information related to EMS.</p>
+
+</dd>
+<dt id="no_drbg_truncated_digests"><b>-no_drbg_truncated_digests</b></dt>
+<dd>
+
+<p>Configure the module to not allow truncated digests to be used with Hash and HMAC DRBGs. See FIPS 140-3 IG D.R for details.</p>
 
 </dd>
 <dt id="self_test_onload"><b>-self_test_onload</b></dt>

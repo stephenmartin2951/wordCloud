@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "CMS_SIGN 3ossl"
-.TH CMS_SIGN 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH CMS_SIGN 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -261,6 +261,9 @@ The \fB\s-1CMS_STREAM\s0\fR flag is only supported for detached data in OpenSSL 
 it is supported for embedded data in OpenSSL 1.0.0 and later.
 .PP
 The \fBCMS_sign_ex()\fR method was added in OpenSSL 3.0.
+.PP
+Since OpenSSL 3.2, \fBCMS_sign_ex()\fR and \fBCMS_sign()\fR ignore any duplicate
+certificates in their \fIcerts\fR argument and no longer throw an error for them.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
 Copyright 2008\-2020 The OpenSSL Project Authors. All Rights Reserved.

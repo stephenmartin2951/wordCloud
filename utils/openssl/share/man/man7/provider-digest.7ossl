@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-DIGEST 7ossl"
-.TH PROVIDER-DIGEST 7ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH PROVIDER-DIGEST 7ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -391,6 +391,7 @@ produces larger digests is unusable with those \s-1API\s0 calls.
 \&\s-1\fBEVP_MD\-MDC2\s0\fR\|(7), \s-1\fBEVP_MD\-RIPEMD160\s0\fR\|(7), \s-1\fBEVP_MD\-SHA1\s0\fR\|(7),
 \&\s-1\fBEVP_MD\-SHA2\s0\fR\|(7), \s-1\fBEVP_MD\-SHA3\s0\fR\|(7), \s-1\fBEVP_MD\-KECCAK\s0\fR\|(7)
 \&\s-1\fBEVP_MD\-SHAKE\s0\fR\|(7), \s-1\fBEVP_MD\-SM3\s0\fR\|(7), \s-1\fBEVP_MD\-WHIRLPOOL\s0\fR\|(7),
+\&\s-1\fBEVP_MD\-NULL\s0\fR\|(7),
 \&\fBlife_cycle\-digest\fR\|(7), \fBEVP_DigestInit\fR\|(3)
 .SH "HISTORY"
 .IX Header "HISTORY"

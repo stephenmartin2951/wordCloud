@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "X509_VERIFY_CERT 3ossl"
-.TH X509_VERIFY_CERT 3ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH X509_VERIFY_CERT 3ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -195,6 +195,14 @@ Applications must interpret any return value <= 0 as an error.
 The \fBX509_STORE_CTX_verify()\fR behaves like \fBX509_verify_cert()\fR except that its
 target certificate is the first element of the list of untrusted certificates
 in \fIctx\fR unless a target certificate is set explicitly.
+.PP
+When the verification target is a raw public key, rather than a certificate,
+both functions validate the target raw public key.
+In that case the number of possible checks is significantly reduced.
+The raw public key can be authenticated only via \s-1DANE TLSA\s0 records, either
+locally synthesised or obtained by the application from \s-1DNS.\s0
+Raw public key \s-1DANE TLSA\s0 records may be added via \fBSSL_add_expected_rpk\fR\|(3) or
+\&\fBSSL_dane_tlsa_add\fR\|(3).
 .SH "RETURN VALUES"
 .IX Header "RETURN VALUES"
 \&\fBX509_build_chain()\fR returns \s-1NULL\s0 on error, else a stack of certificates.
@@ -215,14 +223,19 @@ verification indicated success, the stored error code may be different from
 X509_V_OK, likely because a verification callback function has waived the error.
 .SH "SEE ALSO"
 .IX Header "SEE ALSO"
-\&\fBX509_STORE_CTX_new\fR\|(3), \fBX509_STORE_CTX_init\fR\|(3),
+\&\fBSSL_add_expected_rpk\fR\|(3),
+\&\fBSSL_CTX_dane_enable\fR\|(3),
+\&\fBSSL_dane_tlsa_add\fR\|(3),
+\&\fBX509_STORE_CTX_new\fR\|(3),
+\&\fBX509_STORE_CTX_init\fR\|(3),
+\&\fBX509_STORE_CTX_init_rpk\fR\|(3),
 \&\fBX509_STORE_CTX_get_error\fR\|(3)
 .SH "HISTORY"
 .IX Header "HISTORY"
 \&\fBX509_build_chain()\fR and \fBX509_STORE_CTX_verify()\fR were added in OpenSSL 3.0.
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright 2009\-2022 The OpenSSL Project Authors. All Rights Reserved.
+Copyright 2009\-2023 The OpenSSL Project Authors. All Rights Reserved.
 .PP
 Licensed under the Apache License 2.0 (the \*(L"License\*(R").  You may not use
 this file except in compliance with the License.  You can obtain a copy

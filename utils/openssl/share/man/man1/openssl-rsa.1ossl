@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-RSA 1ossl"
-.TH OPENSSL-RSA 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-RSA 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -239,8 +239,9 @@ This option prints out the value of the modulus of the key.
 This option checks the consistency of an \s-1RSA\s0 private key.
 .IP "\fB\-pubin\fR" 4
 .IX Item "-pubin"
-By default a private key is read from the input file: with this
-option a public key is read instead.
+By default a private key is read from the input.
+With this option a public key is read instead.
+If the input contains no public key but a private key, its public part is used.
 .IP "\fB\-pubout\fR" 4
 .IX Item "-pubout"
 By default a private key is output: with this option a public

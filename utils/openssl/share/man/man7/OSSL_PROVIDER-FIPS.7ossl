@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OSSL_PROVIDER-FIPS 7ossl"
-.TH OSSL_PROVIDER-FIPS 7ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OSSL_PROVIDER-FIPS 7ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -164,14 +164,27 @@ It may be used in a property query string with fetching functions such as
 functions that take a property query string, such as
 \&\fBEVP_PKEY_CTX_new_from_name\fR\|(3).
 .PP
-It isn't mandatory to query for any of these properties, except to
-make sure to get implementations of this provider and none other.
+To be \s-1FIPS\s0 compliant, it is mandatory to include \f(CW\*(C`fips=yes\*(C'\fR as
+part of all property queries.  This ensures that only \s-1FIPS\s0 approved
+implementations are used for cryptographic operations.  The \f(CW\*(C`fips=yes\*(C'\fR
+query may also include other non-crypto support operations that
+are not in the \s-1FIPS\s0 provider, such as asymmetric key encoders, see
+\&\*(L"Asymmetric Key Management\*(R" in \fBOSSL_PROVIDER\-default\fR\|(7).
 .PP
-The \f(CW\*(C`fips=yes\*(C'\fR property can be use to make sure only \s-1FIPS\s0 approved
-implementations are used for crypto operations.  This may also include
-other non-crypto support operations that are not in the \s-1FIPS\s0 provider,
-such as asymmetric key encoders,
-see \*(L"Asymmetric Key Management\*(R" in \fBOSSL_PROVIDER\-default\fR\|(7).
+It is not mandatory to include \f(CW\*(C`provider=fips\*(C'\fR as part of your property
+query.  Including \f(CW\*(C`provider=fips\*(C'\fR in your property query guarantees
+that the OpenSSL \s-1FIPS\s0 provider is used for cryptographic operations
+rather than other \s-1FIPS\s0 capable providers.
+.SS "Provider parameters"
+.IX Subsection "Provider parameters"
+See \*(L"Provider parameters\*(R" in \fBprovider\-base\fR\|(7) for a list of base parameters.
+Additionally the OpenSSL \s-1FIPS\s0 provider also supports the following gettable
+parameters:
+.ie n .IP """security-checks"" (\fB\s-1OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS\s0\fR) <unsigned integer>" 4
+.el .IP "``security-checks'' (\fB\s-1OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS\s0\fR) <unsigned integer>" 4
+.IX Item "security-checks (OSSL_OSSL_PROV_PARAM_SECURITY_CHECKS) <unsigned integer>"
+For further information refer to the \fBopenssl\-fipsinstall\fR\|(1) option
+\&\fB\-no_security_checks\fR.
 .SH "OPERATIONS AND ALGORITHMS"
 .IX Header "OPERATIONS AND ALGORITHMS"
 The OpenSSL \s-1FIPS\s0 provider supports these operations and algorithms:
@@ -281,6 +294,19 @@ The OpenSSL \s-1FIPS\s0 provider supports these operations and algorithms:
 .IP "X448, see \s-1\fBEVP_KEYMGMT\-X448\s0\fR\|(7)" 4
 .IX Item "X448, see EVP_KEYMGMT-X448"
 .PD
+.SS "Random Number Generation"
+.IX Subsection "Random Number Generation"
+.IP "CTR-DRBG, see \s-1\fBEVP_RAND\-CTR\-DRBG\s0\fR\|(7)" 4
+.IX Item "CTR-DRBG, see EVP_RAND-CTR-DRBG"
+.PD 0
+.IP "HASH-DRBG, see \s-1\fBEVP_RAND\-HASH\-DRBG\s0\fR\|(7)" 4
+.IX Item "HASH-DRBG, see EVP_RAND-HASH-DRBG"
+.IP "HMAC-DRBG, see \s-1\fBEVP_RAND\-HMAC\-DRBG\s0\fR\|(7)" 4
+.IX Item "HMAC-DRBG, see EVP_RAND-HMAC-DRBG"
+.IP "TEST-RAND, see \s-1\fBEVP_RAND\-TEST\-RAND\s0\fR\|(7)" 4
+.IX Item "TEST-RAND, see EVP_RAND-TEST-RAND"
+.PD
+TEST-RAND is an unapproved algorithm.
 .SH "SELF TESTING"
 .IX Header "SELF TESTING"
 One of the requirements for the \s-1FIPS\s0 module is self testing. An optional callback

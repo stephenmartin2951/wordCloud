@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "PROVIDER-DECODER 7ossl"
-.TH PROVIDER-DECODER 7ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH PROVIDER-DECODER 7ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -171,7 +171,7 @@ provider\-decoder \- The OSSL_DECODER library <\-> provider functions
 \&                              OSSL_PASSPHRASE_CALLBACK *cb, void *cbarg);
 \&
 \& /* Functions to export a decoded object */
-\& void *OSSL_FUNC_decoder_export_object(void *ctx,
+\& int OSSL_FUNC_decoder_export_object(void *ctx,
 \&                                       const void *objref, size_t objref_sz,
 \&                                       OSSL_CALLBACK *export_cb,
 \&                                       void *export_cbarg);
@@ -221,7 +221,7 @@ For example, the \*(L"function\*(R" \fBOSSL_FUNC_decoder_decode()\fR has these:
 \&                                   int selection,
 \&                                   OSSL_CALLBACK *data_cb, void *data_cbarg,
 \&                                   OSSL_PASSPHRASE_CALLBACK *cb, void *cbarg);
-\& static ossl_inline OSSL_FUNC_decoder_decode_fn
+\& static ossl_inline OSSL_FUNC_decoder_decode_fn*
 \&     OSSL_FUNC_decoder_decode(const OSSL_DISPATCH *opf);
 .Ve
 .PP

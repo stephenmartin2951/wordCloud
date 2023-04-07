@@ -133,7 +133,7 @@
 .\" ========================================================================
 .\"
 .IX Title "OPENSSL-CMP 1ossl"
-.TH OPENSSL-CMP 1ossl "1980-01-01" "3.2.0-dev" "OpenSSL"
+.TH OPENSSL-CMP 1ossl "2023-04-07" "3.2.0-dev" "OpenSSL"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -950,7 +950,12 @@ Invoke the command the given positive number of times with the same parameters.
 Default is one invocation.
 .IP "\fB\-reqin\fR \fIfilenames\fR" 4
 .IX Item "-reqin filenames"
-Take sequence of \s-1CMP\s0 requests from file(s).
+Take the sequence of \s-1CMP\s0 requests to send to the server from file(s).
+This option is ignored if the \fB\-rspin\fR option is given
+because in the latter case no requests are actually sent.
+Except for first request, the client needs to update the recipNonce field in any
+further request in order to satisfy the checks to be performed by the server.
+This causes re-protection (if protecting requests is required).
 .Sp
 Multiple filenames may be given, separated by commas and/or whitespace
 (where in the latter case the whole argument must be enclosed in \*(L"...\*(R").
@@ -958,25 +963,26 @@ As many files are read as needed for a complete transaction.
 .IP "\fB\-reqin_new_tid\fR" 4
 .IX Item "-reqin_new_tid"
 Use a fresh transactionID for \s-1CMP\s0 request messages read using \fB\-reqin\fR,
-which requires re-protecting them as far as they were protected before.
+which causes their reprotection (if protecting requests is required).
 This may be needed in case the sequence of requests is reused
 and the \s-1CMP\s0 server complains that the transaction \s-1ID\s0 has already been used.
 .IP "\fB\-reqout\fR \fIfilenames\fR" 4
 .IX Item "-reqout filenames"
-Save sequence of \s-1CMP\s0 requests to file(s).
+Save the sequence of \s-1CMP\s0 requests created by the client to file(s).
+These requests are not sent to the server if the \fB\-reqin\fR option is used, too.
 .Sp
 Multiple filenames may be given, separated by commas and/or whitespace.
 As many files are written as needed to store the complete transaction.
 .IP "\fB\-rspin\fR \fIfilenames\fR" 4
 .IX Item "-rspin filenames"
-Process sequence of \s-1CMP\s0 responses provided in file(s), skipping server.
+Process the sequence of \s-1CMP\s0 responses provided in file(s), skipping server.
 This excludes \fI\-server\fR, \fI\-port\fR, and \fI\-use_mock_srv\fR.
 .Sp
 Multiple filenames may be given, separated by commas and/or whitespace.
 As many files are read as needed for the complete transaction.
 .IP "\fB\-rspout\fR \fIfilenames\fR" 4
 .IX Item "-rspout filenames"
-Save sequence of \s-1CMP\s0 responses to file(s).
+Save the sequence of received \s-1CMP\s0 responses to file(s).
 .Sp
 Multiple filenames may be given, separated by commas and/or whitespace.
 As many files are written as needed to store the complete transaction.
