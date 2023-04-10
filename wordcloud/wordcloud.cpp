@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <queue>
 #include <set>
+#include <map>
+#include <vector>
 #include "CLI11.hpp"
 #include "split.h"
 #include "wordcloud.h"
@@ -15,6 +17,7 @@
 #include "bloomfilter.h"
 
 using namespace std;
+
 
 long long int wc_h1(string w)
 {
@@ -60,13 +63,12 @@ string hash_lookup(string& hashvalue)
   return "value not found";
 }
 
-void display_wordcount(queue<string>& wordCloud)
+void display_wordcount(queue<string> wordCloud)
 {
   map<string,int> wordCloudCount;
-  int currentCount = 0;
   while(wordCloud.size() > 0)
     {
-      cout << wordCloud.size() << endl;
+      int currentCount = 1;
       string word = wordCloud.front();
       if(wordCloudCount.contains(word))
       {
@@ -80,10 +82,23 @@ void display_wordcount(queue<string>& wordCloud)
       wordCloud.pop();
     }
 
-  cout << "Word Count: \n";
+  vector<std::pair<string, int>> wordCloudVec;
+  for(auto itr = wordCloudCount.begin(); itr != wordCloudCount.end(); ++itr)
+      wordCloudVec.push_back(*itr);
+      
+  sort(wordCloudVec.begin(), wordCloudVec.end(), [=](std::pair<string, int>&a, std::pair<string, int>&b) {return a.second > b.second;});    
 
-  for(auto const& pair : wordCloudCount)
-      cout << pair.first << " : " << pair.second << endl;
+  cout << wordCloudVec[0].first << " : " << wordCloudVec[0].second << ", ";
+  cout << wordCloudVec[1].first << " : " << wordCloudVec[1].second << ", ";
+  cout << wordCloudVec[2].first << " : " << wordCloudVec[2].second << ", ";
+  cout << wordCloudVec[3].first << " : " << wordCloudVec[3].second << ", ";
+  cout << wordCloudVec[4].first << " : " << wordCloudVec[4].second << ", ";
+  cout << wordCloudVec[5].first << " : " << wordCloudVec[5].second << ", ";
+  cout << wordCloudVec[6].first << " : " << wordCloudVec[6].second << ", ";
+  cout << wordCloudVec[7].first << " : " << wordCloudVec[7].second << ", ";
+  cout << wordCloudVec[8].first << " : " << wordCloudVec[8].second << ", ";
+  cout << wordCloudVec[9].first << " : " << wordCloudVec[9].second << endl;
+  
 }
 
 void word_cloud()
@@ -91,13 +106,15 @@ void word_cloud()
   	fstream inputfile;
     queue<string> wordCloud;
   	string lineRead;	
-    string fileLocation = "reducedhamlet.txt";
+    string fileLocation = "hamlet.txt";
   	inputfile.open(fileLocation, ios::in);
     while(getline(inputfile, lineRead))
       {
           vector<string> words = line_split(lineRead);
           for(auto word: words)
             {
+              if(word.length() <= 5)
+                break;   
               if(word.find(',') != string::npos)
                 word.erase(remove(word.begin(), word.end(), ','), word.end());
               size_t hash1 = wc_h1(word) % bits;
@@ -107,13 +124,26 @@ void word_cloud()
               completehash += to_string(hash2);
               completehash += to_string(hash3);
               wordCloud.push(hash_lookup(completehash));
+              if(wordCloud.size() >= slidingSize)
+              {
+                display_wordcount(wordCloud);
+                wordCloud.pop();
+              }   
             }
       }
   inputfile.close();
-  display_wordcount(wordCloud);
 }
 
 int main(int argc, char **argv) {
+
+  //CLI utility implementation beginning
+  CLI::App app{"Team's Bloom Filter"};
+
+  app.add_option("-s", slidingSize, "Sliding Window Size");
+  app.add_option("--slide", slidingSize, "Sliding Window Size");
+
+  CLI11_PARSE(app, argc, argv);
+  //CLI utility implementation ended
 
   word_cloud();
   return 0;
