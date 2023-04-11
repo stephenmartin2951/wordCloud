@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <fstream>
+#include <set>
 #include "bloomfilter.h"
 #include "CLI11.hpp"
 #include "utils.hpp"
@@ -59,7 +60,7 @@ void bloomfilter_insert(string element)
 {
   if(hashf == 1)
   {
-    size_t hash1 = h1(element) % bits;
+    size_t hash1 = hash<string>{} (element) % bits;
     if (data_bitset[hash1] == 1)
       collisions++;
       
@@ -93,7 +94,7 @@ void bloomfilter_search(string element)
 {
   if(hashf == 1)
   {
-    size_t hash1 = h1(element) % bits;
+    size_t hash1 = hash<string>{} (element) % bits;
     if(data_bitset[hash1] == 0)
     {
       avgprob.push_back(0.f);
@@ -163,15 +164,15 @@ int main(int argc, char **argv) {
 
   data_bitset.resize(bits);
 
-  // for (auto const& word: WordList)
-  //   bloomfilter_insert(word);
-  // for (auto const& word: WordList)
-  //   bloomfilter_search(word);
-  // float avgpr = average(avgprob);
-  // cout << hashf << " hash functions :: " << bits << " bits" << endl;
-  // cout << collisions << " collisions" << endl;
+  for (auto const& word: WordList)
+    bloomfilter_insert(word);
+  for (auto const& word: WordList)
+    bloomfilter_search(word);
+  float avgpr = average(avgprob);
+  cout << hashf << " hash functions :: " << bits << " bits" << endl;
+  cout << collisions << " collisions" << endl;
 
-  hashtable_creator();
+  // hashtable_creator();
 
   
 	return 0;

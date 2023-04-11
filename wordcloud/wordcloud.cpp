@@ -6,6 +6,7 @@
 #include <set>
 #include <map>
 #include <vector>
+#include <unordered_map>
 #include "CLI11.hpp"
 #include "split.h"
 #include "wordcloud.h"
@@ -101,6 +102,17 @@ void display_wordcount(queue<string> wordCloud)
   
 }
 
+void display_wordcount()
+{
+  for(size_t i = 0; i != countVec.size(); ++i)
+  {
+    if(countVec[i] > 0)
+    {
+      cout << "Hash value " << i << " is counted " << countVec[i] << " times. \n";
+    }
+  }   
+}
+
 void word_cloud()
 {
   	fstream inputfile;
@@ -117,20 +129,17 @@ void word_cloud()
                 break;   
               if(word.find(',') != string::npos)
                 word.erase(remove(word.begin(), word.end(), ','), word.end());
-              size_t hash1 = wc_h1(word) % bits;
-              size_t hash2 = wc_h2(word) % bits;
-              size_t hash3 = wc_h3(word) % bits;
-              string completehash = to_string(hash1);
-              completehash += to_string(hash2);
-              completehash += to_string(hash3);
-              wordCloud.push(hash_lookup(completehash));
-              if(wordCloud.size() >= slidingSize)
-              {
-                display_wordcount(wordCloud);
-                wordCloud.pop();
-              }   
+              size_t hash1 = hash<string>{} (word) % bits;
+              cout << word << endl;
+              cout << hash1 << endl;
+              countVec[hash1]++;
+              // if(wordCloud.size() >= slidingSize)
+              // {
+              //   display_wordcount(wordCloud);
+              //   wordCloud.pop();
+              // }   
             }
-      }
+      }  
   inputfile.close();
 }
 
@@ -146,6 +155,7 @@ int main(int argc, char **argv) {
   //CLI utility implementation ended
 
   word_cloud();
+  display_wordcount();
   return 0;
 
 }

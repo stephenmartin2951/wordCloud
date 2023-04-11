@@ -20,7 +20,7 @@ set<string> utils::BloomWordListGenerator(string wordListLocation)
 	fstream inputfile;
 	string lineRead;	
   set<string> result;
-  string fileLocation = "/home/runner/Special-Team-Bloom-Filter-comp-339-439-ds/" + wordListLocation;
+  string fileLocation = wordListLocation;
 
 	inputfile.open(fileLocation, ios::in);
   while(getline(inputfile, lineRead))
