@@ -123,8 +123,6 @@ iostream
 -
 algorithm
 -
-queue
--
 set
 -
 map
@@ -153,8 +151,6 @@ cassert
 -
 
 /home/u189940/wordCloud/wordcloud/wordcloud.h
-bitset
--
 string
 -
 vector

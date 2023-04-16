@@ -1,4 +1,3 @@
-#include <bitset>
 #include <string>
 #include <vector>
 #include <set>
@@ -10,4 +9,5 @@ std::vector<short> countVec(1400000000);
 std::vector<std::string> wordcloud_vec(bloomBits);
 std::vector<std::string> badWords = {"value not found"};
 std::set<std::string> uniqWords;
+std::vector<short> word_list_vec;
 
