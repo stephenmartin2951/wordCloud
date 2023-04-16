@@ -1,0 +1,1 @@
+/glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx    -fsycl -fintelfpga -Xssimulation -Xsghdl -Xstarget=Agilex  CMakeFiles/optwordcloud.fpga_sim.dir/optimized_wordcloud.cpp.o  -o optwordcloud.fpga_sim 

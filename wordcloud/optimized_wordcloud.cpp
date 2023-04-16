@@ -15,8 +15,8 @@
 #include "base64/base64.cpp"
 #include "bloomfilter.h"
 
-#include <CL/sycl.hpp>
-#include <dpc_common.hpp>
+#include <sycl/sycl.hpp>
+#include <cassert>
 
 using namespace std;
 using namespace std::chrono;
@@ -102,12 +102,14 @@ void word_cloud()
     queue<string> wordCloud;
   	string lineRead;	
     string fileLocation = "hamlet.txt";
+    int wordCount = 0;
   	inputfile.open(fileLocation, ios::in);
     while(getline(inputfile, lineRead))
       {
           vector<string> words = line_split(lineRead);
           for(auto word: words)
             {
+              wordCount++;
               if(word.length() <= 5)
                 break;   
               if(word.find(',') != string::npos)
@@ -139,13 +141,6 @@ int main(int argc, char **argv) {
   auto start_wordcloud = high_resolution_clock::now();
   word_cloud();
   auto display_wordcloud = high_resolution_clock::now();
-  queue Q;
-
-  buffer<int> A{range{280000000}};
-  buffer<int> B{range{280000000}};
-  buffer<int> C{range{280000000}};
-  buffer<int> D{range{280000000}}; 
-  buffer<int> E{range{280000000}};   
 
   display_wordcount();
   auto end_program = high_resolution_clock::now();

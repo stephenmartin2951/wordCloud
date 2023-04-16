@@ -248,6 +248,32 @@ bloomfilter/fast:
 .PHONY : bloomfilter/fast
 
 #=============================================================================
+# Target rules for targets named cpu-gpu
+
+# Build rule for target.
+cpu-gpu: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 cpu-gpu
+.PHONY : cpu-gpu
+
+# fast build rule for target.
+cpu-gpu/fast:
+	$(MAKE) -f wordcloud/CMakeFiles/cpu-gpu.dir/build.make wordcloud/CMakeFiles/cpu-gpu.dir/build
+.PHONY : cpu-gpu/fast
+
+#=============================================================================
+# Target rules for targets named optwordcloud
+
+# Build rule for target.
+optwordcloud: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 optwordcloud
+.PHONY : optwordcloud
+
+# fast build rule for target.
+optwordcloud/fast:
+	$(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/build
+.PHONY : optwordcloud/fast
+
+#=============================================================================
 # Target rules for targets named wordcloud
 
 # Build rule for target.
@@ -306,6 +332,8 @@ help:
 	@echo "... gtest_main"
 	@echo "... gtest"
 	@echo "... bloomfilter"
+	@echo "... cpu-gpu"
+	@echo "... optwordcloud"
 	@echo "... wordcloud"
 	@echo "... src/main.o"
 	@echo "... src/main.i"

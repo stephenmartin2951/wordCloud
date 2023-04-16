@@ -60,15 +60,15 @@ include bloom/CMakeFiles/bloomfilter.dir/flags.make
 bloom/CMakeFiles/bloomfilter.dir/bloomfilter.cpp.o: bloom/CMakeFiles/bloomfilter.dir/flags.make
 bloom/CMakeFiles/bloomfilter.dir/bloomfilter.cpp.o: ../bloom/bloomfilter.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/u189940/wordCloud/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object bloom/CMakeFiles/bloomfilter.dir/bloomfilter.cpp.o"
-	cd /home/u189940/wordCloud/build/bloom && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bloomfilter.dir/bloomfilter.cpp.o -c /home/u189940/wordCloud/bloom/bloomfilter.cpp
+	cd /home/u189940/wordCloud/build/bloom && /glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/bloomfilter.dir/bloomfilter.cpp.o -c /home/u189940/wordCloud/bloom/bloomfilter.cpp
 
 bloom/CMakeFiles/bloomfilter.dir/bloomfilter.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/bloomfilter.dir/bloomfilter.cpp.i"
-	cd /home/u189940/wordCloud/build/bloom && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/u189940/wordCloud/bloom/bloomfilter.cpp > CMakeFiles/bloomfilter.dir/bloomfilter.cpp.i
+	cd /home/u189940/wordCloud/build/bloom && /glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/u189940/wordCloud/bloom/bloomfilter.cpp > CMakeFiles/bloomfilter.dir/bloomfilter.cpp.i
 
 bloom/CMakeFiles/bloomfilter.dir/bloomfilter.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/bloomfilter.dir/bloomfilter.cpp.s"
-	cd /home/u189940/wordCloud/build/bloom && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/u189940/wordCloud/bloom/bloomfilter.cpp -o CMakeFiles/bloomfilter.dir/bloomfilter.cpp.s
+	cd /home/u189940/wordCloud/build/bloom && /glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/u189940/wordCloud/bloom/bloomfilter.cpp -o CMakeFiles/bloomfilter.dir/bloomfilter.cpp.s
 
 # Object files for target bloomfilter
 bloomfilter_OBJECTS = \

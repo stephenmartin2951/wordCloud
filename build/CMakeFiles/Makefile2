@@ -159,6 +159,7 @@ bloom/clean: bloom/CMakeFiles/bloomfilter.dir/clean
 # Directory level rules for directory wordcloud
 
 # Recursive "all" directory target.
+wordcloud/all: wordcloud/CMakeFiles/optwordcloud.dir/all
 wordcloud/all: wordcloud/CMakeFiles/wordcloud.dir/all
 
 .PHONY : wordcloud/all
@@ -169,6 +170,8 @@ wordcloud/preinstall:
 .PHONY : wordcloud/preinstall
 
 # Recursive "clean" directory target.
+wordcloud/clean: wordcloud/CMakeFiles/cpu-gpu.dir/clean
+wordcloud/clean: wordcloud/CMakeFiles/optwordcloud.dir/clean
 wordcloud/clean: wordcloud/CMakeFiles/wordcloud.dir/clean
 
 .PHONY : wordcloud/clean
@@ -364,13 +367,67 @@ bloom/CMakeFiles/bloomfilter.dir/clean:
 .PHONY : bloom/CMakeFiles/bloomfilter.dir/clean
 
 #=============================================================================
+# Target rules for target wordcloud/CMakeFiles/cpu-gpu.dir
+
+# All Build rule for target.
+wordcloud/CMakeFiles/cpu-gpu.dir/all: wordcloud/CMakeFiles/optwordcloud.dir/all
+	$(MAKE) -f wordcloud/CMakeFiles/cpu-gpu.dir/build.make wordcloud/CMakeFiles/cpu-gpu.dir/depend
+	$(MAKE) -f wordcloud/CMakeFiles/cpu-gpu.dir/build.make wordcloud/CMakeFiles/cpu-gpu.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/u189940/wordCloud/build/CMakeFiles --progress-num= "Built target cpu-gpu"
+.PHONY : wordcloud/CMakeFiles/cpu-gpu.dir/all
+
+# Build rule for subdir invocation for target.
+wordcloud/CMakeFiles/cpu-gpu.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/u189940/wordCloud/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 wordcloud/CMakeFiles/cpu-gpu.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/u189940/wordCloud/build/CMakeFiles 0
+.PHONY : wordcloud/CMakeFiles/cpu-gpu.dir/rule
+
+# Convenience name for target.
+cpu-gpu: wordcloud/CMakeFiles/cpu-gpu.dir/rule
+
+.PHONY : cpu-gpu
+
+# clean rule for target.
+wordcloud/CMakeFiles/cpu-gpu.dir/clean:
+	$(MAKE) -f wordcloud/CMakeFiles/cpu-gpu.dir/build.make wordcloud/CMakeFiles/cpu-gpu.dir/clean
+.PHONY : wordcloud/CMakeFiles/cpu-gpu.dir/clean
+
+#=============================================================================
+# Target rules for target wordcloud/CMakeFiles/optwordcloud.dir
+
+# All Build rule for target.
+wordcloud/CMakeFiles/optwordcloud.dir/all:
+	$(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/depend
+	$(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/u189940/wordCloud/build/CMakeFiles --progress-num=13,14 "Built target optwordcloud"
+.PHONY : wordcloud/CMakeFiles/optwordcloud.dir/all
+
+# Build rule for subdir invocation for target.
+wordcloud/CMakeFiles/optwordcloud.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/u189940/wordCloud/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 wordcloud/CMakeFiles/optwordcloud.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/u189940/wordCloud/build/CMakeFiles 0
+.PHONY : wordcloud/CMakeFiles/optwordcloud.dir/rule
+
+# Convenience name for target.
+optwordcloud: wordcloud/CMakeFiles/optwordcloud.dir/rule
+
+.PHONY : optwordcloud
+
+# clean rule for target.
+wordcloud/CMakeFiles/optwordcloud.dir/clean:
+	$(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/clean
+.PHONY : wordcloud/CMakeFiles/optwordcloud.dir/clean
+
+#=============================================================================
 # Target rules for target wordcloud/CMakeFiles/wordcloud.dir
 
 # All Build rule for target.
 wordcloud/CMakeFiles/wordcloud.dir/all:
 	$(MAKE) -f wordcloud/CMakeFiles/wordcloud.dir/build.make wordcloud/CMakeFiles/wordcloud.dir/depend
 	$(MAKE) -f wordcloud/CMakeFiles/wordcloud.dir/build.make wordcloud/CMakeFiles/wordcloud.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/u189940/wordCloud/build/CMakeFiles --progress-num=13,14 "Built target wordcloud"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/u189940/wordCloud/build/CMakeFiles --progress-num=15,16 "Built target wordcloud"
 .PHONY : wordcloud/CMakeFiles/wordcloud.dir/all
 
 # Build rule for subdir invocation for target.

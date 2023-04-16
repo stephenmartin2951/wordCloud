@@ -40,5 +40,7 @@
 /home/u189940/wordCloud/build/wordcloud/CMakeFiles/list_install_components.dir
 /home/u189940/wordCloud/build/wordcloud/CMakeFiles/rebuild_cache.dir
 /home/u189940/wordCloud/build/wordcloud/CMakeFiles/edit_cache.dir
+/home/u189940/wordCloud/build/wordcloud/CMakeFiles/cpu-gpu.dir
+/home/u189940/wordCloud/build/wordcloud/CMakeFiles/optwordcloud.dir
 /home/u189940/wordCloud/build/wordcloud/CMakeFiles/install/local.dir
 /home/u189940/wordCloud/build/wordcloud/CMakeFiles/wordcloud.dir

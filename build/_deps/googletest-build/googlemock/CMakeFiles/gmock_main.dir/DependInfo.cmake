@@ -6,7 +6,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/u189940/wordCloud/build/_deps/googletest-src/googlemock/src/gmock_main.cc" "/home/u189940/wordCloud/build/_deps/googletest-build/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o"
   )
-set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_CXX_COMPILER_ID "Clang")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
@@ -29,10 +29,11 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/dal/2023.0.0/include"
   "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/ccl/2021.8.0/include/cpu_gpu_dpcpp"
   "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/clck/2021.7.2/include"
+  "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/compiler/include"
   "/usr/include/c++/9"
   "/usr/include/x86_64-linux-gnu/c++/9"
   "/usr/include/c++/9/backward"
-  "/usr/lib/gcc/x86_64-linux-gnu/9/include"
+  "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/lib/clang/16.0.0/include"
   "/usr/local/include"
   "/usr/include/x86_64-linux-gnu"
   "/usr/include"

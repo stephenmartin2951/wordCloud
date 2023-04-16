@@ -60,15 +60,15 @@ include wordcloud/CMakeFiles/wordcloud.dir/flags.make
 wordcloud/CMakeFiles/wordcloud.dir/wordcloud.cpp.o: wordcloud/CMakeFiles/wordcloud.dir/flags.make
 wordcloud/CMakeFiles/wordcloud.dir/wordcloud.cpp.o: ../wordcloud/wordcloud.cpp
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/u189940/wordCloud/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object wordcloud/CMakeFiles/wordcloud.dir/wordcloud.cpp.o"
-	cd /home/u189940/wordCloud/build/wordcloud && /usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordcloud.dir/wordcloud.cpp.o -c /home/u189940/wordCloud/wordcloud/wordcloud.cpp
+	cd /home/u189940/wordCloud/build/wordcloud && /glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/wordcloud.dir/wordcloud.cpp.o -c /home/u189940/wordCloud/wordcloud/wordcloud.cpp
 
 wordcloud/CMakeFiles/wordcloud.dir/wordcloud.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/wordcloud.dir/wordcloud.cpp.i"
-	cd /home/u189940/wordCloud/build/wordcloud && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/u189940/wordCloud/wordcloud/wordcloud.cpp > CMakeFiles/wordcloud.dir/wordcloud.cpp.i
+	cd /home/u189940/wordCloud/build/wordcloud && /glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/u189940/wordCloud/wordcloud/wordcloud.cpp > CMakeFiles/wordcloud.dir/wordcloud.cpp.i
 
 wordcloud/CMakeFiles/wordcloud.dir/wordcloud.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/wordcloud.dir/wordcloud.cpp.s"
-	cd /home/u189940/wordCloud/build/wordcloud && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/u189940/wordCloud/wordcloud/wordcloud.cpp -o CMakeFiles/wordcloud.dir/wordcloud.cpp.s
+	cd /home/u189940/wordCloud/build/wordcloud && /glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/u189940/wordCloud/wordcloud/wordcloud.cpp -o CMakeFiles/wordcloud.dir/wordcloud.cpp.s
 
 # Object files for target wordcloud
 wordcloud_OBJECTS = \

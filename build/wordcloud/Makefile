@@ -157,6 +157,36 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+wordcloud/CMakeFiles/cpu-gpu.dir/rule:
+	cd /home/u189940/wordCloud/build && $(MAKE) -f CMakeFiles/Makefile2 wordcloud/CMakeFiles/cpu-gpu.dir/rule
+.PHONY : wordcloud/CMakeFiles/cpu-gpu.dir/rule
+
+# Convenience name for target.
+cpu-gpu: wordcloud/CMakeFiles/cpu-gpu.dir/rule
+
+.PHONY : cpu-gpu
+
+# fast build rule for target.
+cpu-gpu/fast:
+	cd /home/u189940/wordCloud/build && $(MAKE) -f wordcloud/CMakeFiles/cpu-gpu.dir/build.make wordcloud/CMakeFiles/cpu-gpu.dir/build
+.PHONY : cpu-gpu/fast
+
+# Convenience name for target.
+wordcloud/CMakeFiles/optwordcloud.dir/rule:
+	cd /home/u189940/wordCloud/build && $(MAKE) -f CMakeFiles/Makefile2 wordcloud/CMakeFiles/optwordcloud.dir/rule
+.PHONY : wordcloud/CMakeFiles/optwordcloud.dir/rule
+
+# Convenience name for target.
+optwordcloud: wordcloud/CMakeFiles/optwordcloud.dir/rule
+
+.PHONY : optwordcloud
+
+# fast build rule for target.
+optwordcloud/fast:
+	cd /home/u189940/wordCloud/build && $(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/build
+.PHONY : optwordcloud/fast
+
+# Convenience name for target.
 wordcloud/CMakeFiles/wordcloud.dir/rule:
 	cd /home/u189940/wordCloud/build && $(MAKE) -f CMakeFiles/Makefile2 wordcloud/CMakeFiles/wordcloud.dir/rule
 .PHONY : wordcloud/CMakeFiles/wordcloud.dir/rule
@@ -170,6 +200,33 @@ wordcloud: wordcloud/CMakeFiles/wordcloud.dir/rule
 wordcloud/fast:
 	cd /home/u189940/wordCloud/build && $(MAKE) -f wordcloud/CMakeFiles/wordcloud.dir/build.make wordcloud/CMakeFiles/wordcloud.dir/build
 .PHONY : wordcloud/fast
+
+optimized_wordcloud.o: optimized_wordcloud.cpp.o
+
+.PHONY : optimized_wordcloud.o
+
+# target to build an object file
+optimized_wordcloud.cpp.o:
+	cd /home/u189940/wordCloud/build && $(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/optimized_wordcloud.cpp.o
+.PHONY : optimized_wordcloud.cpp.o
+
+optimized_wordcloud.i: optimized_wordcloud.cpp.i
+
+.PHONY : optimized_wordcloud.i
+
+# target to preprocess a source file
+optimized_wordcloud.cpp.i:
+	cd /home/u189940/wordCloud/build && $(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/optimized_wordcloud.cpp.i
+.PHONY : optimized_wordcloud.cpp.i
+
+optimized_wordcloud.s: optimized_wordcloud.cpp.s
+
+.PHONY : optimized_wordcloud.s
+
+# target to generate assembly for a file
+optimized_wordcloud.cpp.s:
+	cd /home/u189940/wordCloud/build && $(MAKE) -f wordcloud/CMakeFiles/optwordcloud.dir/build.make wordcloud/CMakeFiles/optwordcloud.dir/optimized_wordcloud.cpp.s
+.PHONY : optimized_wordcloud.cpp.s
 
 wordcloud.o: wordcloud.cpp.o
 
@@ -209,8 +266,13 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... cpu-gpu"
+	@echo "... optwordcloud"
 	@echo "... install/local"
 	@echo "... wordcloud"
+	@echo "... optimized_wordcloud.o"
+	@echo "... optimized_wordcloud.i"
+	@echo "... optimized_wordcloud.s"
 	@echo "... wordcloud.o"
 	@echo "... wordcloud.i"
 	@echo "... wordcloud.s"
