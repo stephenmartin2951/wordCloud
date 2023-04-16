@@ -7,39 +7,19 @@
 #include <map>
 #include <vector>
 #include <unordered_map>
+#include <chrono>
 #include "CLI11.hpp"
 #include "split.h"
 #include "wordcloud.h"
-#include "sha256.hpp"
-#include "md5.hpp"
-#include "djb2.hpp"
 #include "base64/base64.hpp"
 #include "base64/base64.cpp"
 #include "bloomfilter.h"
 
 using namespace std;
+using namespace std::chrono;
 
 
-long long int wc_h1(string w)
-{
-  string hashedString = md5(w);
-  string reducedString = hashedString.substr(0,9);
-  long long int x = stoi(reducedString);
-  return x;
-}
 
-long long int wc_h2(string w)
-{
-  string hashedString = sha256(w);
-  string reducedString = hashedString.substr(0,9);
-  long long int x = stoi(reducedString);
-  return x;
-}
-
-int wc_h3(string w)
-{
-  return abs(hf(w));
-}
 
 string hash_lookup(string& hashvalue)
 {
@@ -130,8 +110,6 @@ void word_cloud()
               if(word.find(',') != string::npos)
                 word.erase(remove(word.begin(), word.end(), ','), word.end());
               size_t hash1 = hash<string>{} (word) % bits;
-              cout << word << endl;
-              cout << hash1 << endl;
               countVec[hash1]++;
               // if(wordCloud.size() >= slidingSize)
               // {
@@ -145,6 +123,8 @@ void word_cloud()
 
 int main(int argc, char **argv) {
 
+  auto start_program = high_resolution_clock::now();
+
   //CLI utility implementation beginning
   CLI::App app{"Team's Bloom Filter"};
 
@@ -153,9 +133,20 @@ int main(int argc, char **argv) {
 
   CLI11_PARSE(app, argc, argv);
   //CLI utility implementation ended
-
+  auto start_wordcloud = high_resolution_clock::now();
   word_cloud();
+  auto display_wordcloud = high_resolution_clock::now();
   display_wordcount();
+  auto end_program = high_resolution_clock::now();
+
+  auto total_runtime = duration_cast<microseconds>(end_program - start_program);
+  auto wordcloud_generation = duration_cast<microseconds>(display_wordcloud - start_wordcloud);
+  auto wordcloud_display = duration_cast<microseconds>(end_program - display_wordcloud);
+
+  cout << "Total run time : " << total_runtime.count() << " microseconds" << endl;
+  cout << "Wordcloud generation time : " << wordcloud_generation.count() << " microseconds" << endl;
+  cout << "Wordcloud display time : " << wordcloud_display.count() << " microseconds" << endl;
+
   return 0;
 
 }

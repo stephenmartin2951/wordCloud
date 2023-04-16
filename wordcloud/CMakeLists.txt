@@ -8,6 +8,11 @@ add_executable(
   wordcloud.cpp
 )
 
+add_executable(
+  optwordcloud
+  optimizied_wordcloud.cpp
+)
+
 target_include_directories(wordcloud PUBLIC ${OPENSSL_INCLUDE_DIR})
 target_include_directories(wordcloud PUBLIC ${BLOOM_ROOT_DIR})
 
