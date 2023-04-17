@@ -79,6 +79,10 @@ optwordcloud_EXTERNAL_OBJECTS =
 
 wordcloud/optwordcloud: wordcloud/CMakeFiles/optwordcloud.dir/optimized_wordcloud.cpp.o
 wordcloud/optwordcloud: wordcloud/CMakeFiles/optwordcloud.dir/build.make
+wordcloud/optwordcloud: _deps/fmt-build/libfmt.a
+wordcloud/optwordcloud: _deps/spdlog-build/libspdlog.a
+wordcloud/optwordcloud: _deps/scnlib-build/libscn.a
+wordcloud/optwordcloud: _deps/fmt-build/libfmt.a
 wordcloud/optwordcloud: wordcloud/CMakeFiles/optwordcloud.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/u189940/wordCloud/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable optwordcloud"
 	cd /home/u189940/wordCloud/build/wordcloud && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/optwordcloud.dir/link.txt --verbose=$(VERBOSE)

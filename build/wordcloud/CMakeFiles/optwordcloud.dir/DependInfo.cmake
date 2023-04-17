@@ -8,12 +8,22 @@ set(CMAKE_DEPENDS_CHECK_CXX
   )
 set(CMAKE_CXX_COMPILER_ID "Clang")
 
+# Preprocessor definitions for this target.
+set(CMAKE_TARGET_DEFINITIONS_CXX
+  "SCN_HEADER_ONLY=0"
+  "SPDLOG_COMPILED_LIB"
+  "SPDLOG_FMT_EXTERNAL"
+  )
+
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../include"
   "../utils"
   "../utils/openssl/include"
   "../bloom"
+  "_deps/fmt-src/include"
+  "_deps/spdlog-src/include"
+  "_deps/scnlib-src/include"
   "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/vpl/2023.0.0/include"
   "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/tbb/2021.8.0/include"
   "/glob/development-tools/versions/oneapi/2023.0.1/oneapi/mpi/2021.8.0/include"
@@ -39,6 +49,9 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
+  "/home/u189940/wordCloud/build/_deps/fmt-build/CMakeFiles/fmt.dir/DependInfo.cmake"
+  "/home/u189940/wordCloud/build/_deps/spdlog-build/CMakeFiles/spdlog.dir/DependInfo.cmake"
+  "/home/u189940/wordCloud/build/_deps/scnlib-build/CMakeFiles/scn.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

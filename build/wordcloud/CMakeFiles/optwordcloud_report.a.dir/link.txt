@@ -1,1 +1,0 @@
-/glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx    -fsycl -fintelfpga -Xshardware -Xstarget=Agilex  -fsycl-link=early CMakeFiles/optwordcloud_report.a.dir/optimized_wordcloud.cpp.o  -o optwordcloud_report.a 

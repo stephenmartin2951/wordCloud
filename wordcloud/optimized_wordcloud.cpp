@@ -16,6 +16,9 @@
 
 #include <sycl/sycl.hpp>
 #include <cassert>
+#include "spdlog/spdlog.h"
+
+
 
 using namespace std;
 using namespace std::chrono;
@@ -50,15 +53,6 @@ void word_list()
   inputfile.close();
 }
 
-vector<short> slice(vector<short> const &v, int m, int n)
-{
-    auto first = v.cbegin() + m;
-    auto last = v.cbegin() + n + 1;
- 
-    vector<short> vec(first, last);
-    return vec;
-}
-
 int main(int argc, char **argv) {
   auto start_program = high_resolution_clock::now();
 
@@ -89,7 +83,20 @@ int main(int argc, char **argv) {
 
   auto display_wordcloud = high_resolution_clock::now();
 
-  display_wordcount(countVec);
+  buffer<short> b3{countVec};
+
+  queue q2;
+  q2.submit([&](handler& h) {
+    accessor in{b3, h};
+
+    h.parallel_for(1400000000, [=](id<1> idx) {
+      if(in[idx] > 0)
+        {
+          spdlog::info("Hash value: {} is counted {} times.", idx, in[idx]);
+        }
+    });
+  });
+
   auto end_program = high_resolution_clock::now();
 
   auto total_runtime = duration_cast<microseconds>(end_program - start_program);

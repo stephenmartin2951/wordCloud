@@ -183,6 +183,45 @@ main/fast:
 .PHONY : main/fast
 
 #=============================================================================
+# Target rules for targets named fmt
+
+# Build rule for target.
+fmt: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 fmt
+.PHONY : fmt
+
+# fast build rule for target.
+fmt/fast:
+	$(MAKE) -f _deps/fmt-build/CMakeFiles/fmt.dir/build.make _deps/fmt-build/CMakeFiles/fmt.dir/build
+.PHONY : fmt/fast
+
+#=============================================================================
+# Target rules for targets named spdlog
+
+# Build rule for target.
+spdlog: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 spdlog
+.PHONY : spdlog
+
+# fast build rule for target.
+spdlog/fast:
+	$(MAKE) -f _deps/spdlog-build/CMakeFiles/spdlog.dir/build.make _deps/spdlog-build/CMakeFiles/spdlog.dir/build
+.PHONY : spdlog/fast
+
+#=============================================================================
+# Target rules for targets named scn
+
+# Build rule for target.
+scn: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 scn
+.PHONY : scn
+
+# fast build rule for target.
+scn/fast:
+	$(MAKE) -f _deps/scnlib-build/CMakeFiles/scn.dir/build.make _deps/scnlib-build/CMakeFiles/scn.dir/build
+.PHONY : scn/fast
+
+#=============================================================================
 # Target rules for targets named gmock_main
 
 # Build rule for target.
@@ -327,6 +366,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... copy-compile-commands"
 	@echo "... main"
+	@echo "... fmt"
+	@echo "... spdlog"
+	@echo "... scn"
 	@echo "... gmock_main"
 	@echo "... gmock"
 	@echo "... gtest_main"

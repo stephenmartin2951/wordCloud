@@ -29,6 +29,7 @@ target_include_directories(wordcloud PUBLIC ${BLOOM_ROOT_DIR})
 
 target_include_directories(optwordcloud PUBLIC ${OPENSSL_INCLUDE_DIR})
 target_include_directories(optwordcloud PUBLIC ${BLOOM_ROOT_DIR})
+target_link_libraries(optwordcloud fmt::fmt spdlog::spdlog scn::scn)
 
 set_target_properties(${TARGET_NAME} PROPERTIES COMPILE_FLAGS "${COMPILE_FLAGS}")
 set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "${LINK_FLAGS}")

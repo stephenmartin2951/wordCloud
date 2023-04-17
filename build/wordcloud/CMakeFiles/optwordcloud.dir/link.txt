@@ -1,1 +1,1 @@
-/glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx    -fsycl CMakeFiles/optwordcloud.dir/optimized_wordcloud.cpp.o  -o optwordcloud 
+/glob/development-tools/versions/oneapi/2023.0.1/oneapi/compiler/2023.0.0/linux/bin/icpx  -O3 -DNDEBUG  -fsycl CMakeFiles/optwordcloud.dir/optimized_wordcloud.cpp.o  -o optwordcloud  ../_deps/fmt-build/libfmt.a ../_deps/spdlog-build/libspdlog.a ../_deps/scnlib-build/libscn.a ../_deps/fmt-build/libfmt.a -lpthread 

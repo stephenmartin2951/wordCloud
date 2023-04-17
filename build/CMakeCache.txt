@@ -23,9 +23,8 @@ CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 //Path to a program.
 CMAKE_AR:FILEPATH=/usr/bin/ar
 
-//Choose the type of build, options are: None Debug Release RelWithDebInfo
-// MinSizeRel ...
-CMAKE_BUILD_TYPE:STRING=
+//Choose Release or Debug
+CMAKE_BUILD_TYPE:STRING=Release
 
 //Enable/Disable color output during build.
 CMAKE_COLOR_MAKEFILE:BOOL=ON
@@ -194,16 +193,16 @@ CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 CMAKE_PROJECT_NAME:STATIC=WordCloud
 
 //Value Computed by CMake
-CMAKE_PROJECT_VERSION:STATIC=1.11.0
+CMAKE_PROJECT_VERSION:STATIC=1.9.2
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION_MAJOR:STATIC=1
 
 //Value Computed by CMake
-CMAKE_PROJECT_VERSION_MINOR:STATIC=11
+CMAKE_PROJECT_VERSION_MINOR:STATIC=9
 
 //Value Computed by CMake
-CMAKE_PROJECT_VERSION_PATCH:STATIC=0
+CMAKE_PROJECT_VERSION_PATCH:STATIC=2
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION_TWEAK:STATIC=
@@ -281,18 +280,216 @@ FETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF
 FETCHCONTENT_QUIET:BOOL=ON
 
 //When not empty, overrides where to find pre-populated content
+// for fmt
+FETCHCONTENT_SOURCE_DIR_FMT:PATH=
+
+//When not empty, overrides where to find pre-populated content
 // for googletest
 FETCHCONTENT_SOURCE_DIR_GOOGLETEST:PATH=
+
+//When not empty, overrides where to find pre-populated content
+// for scnlib
+FETCHCONTENT_SOURCE_DIR_SCNLIB:PATH=
+
+//When not empty, overrides where to find pre-populated content
+// for spdlog
+FETCHCONTENT_SOURCE_DIR_SPDLOG:PATH=
 
 //Enables UPDATE_DISCONNECTED behavior for all content population
 FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
 
+//Enables UPDATE_DISCONNECTED behavior just for population of fmt
+FETCHCONTENT_UPDATES_DISCONNECTED_FMT:BOOL=OFF
+
 //Enables UPDATE_DISCONNECTED behavior just for population of googletest
 FETCHCONTENT_UPDATES_DISCONNECTED_GOOGLETEST:BOOL=OFF
+
+//Enables UPDATE_DISCONNECTED behavior just for population of scnlib
+FETCHCONTENT_UPDATES_DISCONNECTED_SCNLIB:BOOL=OFF
+
+//Enables UPDATE_DISCONNECTED behavior just for population of spdlog
+FETCHCONTENT_UPDATES_DISCONNECTED_SPDLOG:BOOL=OFF
+
+//Value Computed by CMake
+FMT_BINARY_DIR:STATIC=/home/u189940/wordCloud/build/_deps/fmt-build
+
+//Generate the cuda-test target.
+FMT_CUDA_TEST:BOOL=OFF
+
+//Debug library postfix.
+FMT_DEBUG_POSTFIX:STRING=d
+
+//Generate the doc target.
+FMT_DOC:BOOL=OFF
+
+//Generate the fuzz target.
+FMT_FUZZ:BOOL=OFF
+
+//Installation directory for include files, a relative path that
+// will be joined with /usr/local or an absolute path.
+FMT_INC_DIR:STRING=include
+
+//Generate the install target.
+FMT_INSTALL:BOOL=OFF
+
+//Build a module instead of a traditional library.
+FMT_MODULE:BOOL=OFF
+
+//Include core requiring OS (Windows/Posix) 
+FMT_OS:BOOL=ON
+
+//Enable extra warnings and expensive tests.
+FMT_PEDANTIC:BOOL=OFF
+
+//Value Computed by CMake
+FMT_SOURCE_DIR:STATIC=/home/u189940/wordCloud/build/_deps/fmt-src
+
+//Expose headers with marking them as system.
+FMT_SYSTEM_HEADERS:BOOL=OFF
+
+//Generate the test target.
+FMT_TEST:BOOL=OFF
+
+//Halt the compilation with an error on compiler warnings.
+FMT_WERROR:BOOL=OFF
 
 //Enable installation of googletest. (Projects embedding googletest
 // may want to turn this OFF.)
 INSTALL_GTEST:BOOL=ON
+
+//Generate benchmark target
+SCN_BENCHMARKS:BOOL=OFF
+
+//Generate bloat test target
+SCN_BUILD_BLOAT:BOOL=OFF
+
+//Generate build time test target
+SCN_BUILD_BUILDTIME:BOOL=OFF
+
+//Build fuzzing tests
+SCN_BUILD_FUZZING:BOOL=OFF
+
+//Build scan_localized tests (requires locales en_US.UTF-8 and
+// fi_FI.UTF-8)
+SCN_BUILD_LOCALIZED_TESTS:BOOL=OFF
+
+//Enable coverage reporting
+SCN_COVERAGE:BOOL=OFF
+
+//Generate documentation target
+SCN_DOCS:BOOL=OFF
+
+//Generate examples target
+SCN_EXAMPLES:BOOL=OFF
+
+//Generate install target
+SCN_INSTALL:BOOL=OFF
+
+//Use stricter warnings
+SCN_PEDANTIC:BOOL=OFF
+
+//Generate tests target
+SCN_TESTS:BOOL=OFF
+
+//Compile as 32-bit (gcc or clang only)
+SCN_USE_32BIT:BOOL=OFF
+
+//Compile with AddressSanitizer (clang only)
+SCN_USE_ASAN:BOOL=OFF
+
+//Use lemire/fast_float bundled with scnlib
+SCN_USE_BUNDLED_FAST_FLOAT:BOOL=ON
+
+//Compile with exception support (disabling will cause test failures)
+SCN_USE_EXCEPTIONS:BOOL=ON
+
+//Compile with MemorySanitizer (clang only)
+SCN_USE_MSAN:BOOL=OFF
+
+//Add -march=native to build flags (gcc or clang only)
+SCN_USE_NATIVE_ARCH:BOOL=OFF
+
+//Compile with RTTI (run-time type information) support
+SCN_USE_RTTI:BOOL=ON
+
+//Compile with UndefinedBehaviorSanitizer (clang only)
+SCN_USE_UBSAN:BOOL=OFF
+
+//Halt compilation in case of a warning
+SCN_WERROR:BOOL=OFF
+
+//Build all artifacts
+SPDLOG_BUILD_ALL:BOOL=OFF
+
+//Build benchmarks (Requires https://github.com/google/benchmark.git
+// to be installed)
+SPDLOG_BUILD_BENCH:BOOL=OFF
+
+//Build example
+SPDLOG_BUILD_EXAMPLE:BOOL=OFF
+
+//Build header only example
+SPDLOG_BUILD_EXAMPLE_HO:BOOL=OFF
+
+//Build shared library
+SPDLOG_BUILD_SHARED:BOOL=OFF
+
+//Build tests
+SPDLOG_BUILD_TESTS:BOOL=OFF
+
+//Build tests using the header only version
+SPDLOG_BUILD_TESTS_HO:BOOL=OFF
+
+//Enable compiler warnings
+SPDLOG_BUILD_WARNINGS:BOOL=OFF
+
+//Use CLOCK_REALTIME_COARSE instead of the regular clock,
+SPDLOG_CLOCK_COARSE:BOOL=OFF
+
+//Disable default logger creation
+SPDLOG_DISABLE_DEFAULT_LOGGER:BOOL=OFF
+
+//Build static or shared library using precompiled header to speed
+// up compilation time
+SPDLOG_ENABLE_PCH:BOOL=OFF
+
+//Use external fmt library instead of bundled
+SPDLOG_FMT_EXTERNAL:BOOL=ON
+
+//Use external fmt header-only library instead of bundled
+SPDLOG_FMT_EXTERNAL_HO:BOOL=OFF
+
+//Generate the install target
+SPDLOG_INSTALL:BOOL=OFF
+
+//prevent spdlog from using of std::atomic log levels (use only
+// if your code never modifies log levels concurrently
+SPDLOG_NO_ATOMIC_LEVELS:BOOL=OFF
+
+//Compile with -fno-exceptions. Call abort() on any spdlog exceptions
+SPDLOG_NO_EXCEPTIONS:BOOL=OFF
+
+//prevent spdlog from querying the thread id on each log call if
+// thread id is not needed
+SPDLOG_NO_THREAD_ID:BOOL=OFF
+
+//prevent spdlog from using thread local storage
+SPDLOG_NO_TLS:BOOL=OFF
+
+//Prevent from child processes to inherit log file descriptors
+SPDLOG_PREVENT_CHILD_FD:BOOL=OFF
+
+//Enable address sanitizer in tests
+SPDLOG_SANITIZE_ADDRESS:BOOL=OFF
+
+//run clang-tidy
+SPDLOG_TIDY:BOOL=OFF
+
+//non supported option
+SPDLOG_WCHAR_FILENAMES:BOOL=OFF
+
+//non supported option
+SPDLOG_WCHAR_SUPPORT:BOOL=OFF
 
 //Value Computed by CMake
 WordCloud_BINARY_DIR:STATIC=/home/u189940/wordCloud/build
@@ -348,6 +545,21 @@ gtest_hide_internal_symbols:BOOL=OFF
 
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;gtest;
+
+//Value Computed by CMake
+scn_BINARY_DIR:STATIC=/home/u189940/wordCloud/build/_deps/scnlib-build
+
+//Value Computed by CMake
+scn_SOURCE_DIR:STATIC=/home/u189940/wordCloud/build/_deps/scnlib-src
+
+//Value Computed by CMake
+spdlog_BINARY_DIR:STATIC=/home/u189940/wordCloud/build/_deps/spdlog-build
+
+//Dependencies for the target
+spdlog_LIB_DEPENDS:STATIC=general;fmt::fmt;
+
+//Value Computed by CMake
+spdlog_SOURCE_DIR:STATIC=/home/u189940/wordCloud/build/_deps/spdlog-src
 
 
 ########################
@@ -492,7 +704,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=6
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=12
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -539,6 +751,14 @@ CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 FIND_PACKAGE_MESSAGE_DETAILS_Python:INTERNAL=[/glob/development-tools/versions/oneapi/2023.0.1/oneapi/intelpython/latest/bin/python3.9][cfound components: Interpreter ][v3.9.15()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
+//Test FMT_HAS_VARIANT
+FMT_HAS_VARIANT:INTERNAL=1
+//Test HAS_NULLPTR_WARNING
+HAS_NULLPTR_WARNING:INTERNAL=1
+//Have symbol strtod_l
+HAVE_STRTOD_L:INTERNAL=
+//Test SUPPORTS_USER_DEFINED_LITERALS
+SUPPORTS_USER_DEFINED_LITERALS:INTERNAL=1
 //CMAKE_INSTALL_PREFIX during last run
 _GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
 //ADVANCED property for variable: _Python_EXECUTABLE
@@ -560,5 +780,9 @@ gtest_disable_pthreads-ADVANCED:INTERNAL=1
 gtest_force_shared_crt-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: gtest_hide_internal_symbols
 gtest_hide_internal_symbols-ADVANCED:INTERNAL=1
+//Test has_std_20_flag
+has_std_20_flag:INTERNAL=1
+//Test has_std_2a_flag
+has_std_2a_flag:INTERNAL=1
 targets_export_name:INTERNAL=GTestTargets
 
