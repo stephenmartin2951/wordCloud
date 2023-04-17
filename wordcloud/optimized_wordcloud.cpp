@@ -83,19 +83,21 @@ int main(int argc, char **argv) {
 
   auto display_wordcloud = high_resolution_clock::now();
 
-  buffer<short> b3{countVec};
+  display_wordcount(countVec);
 
-  queue q2;
-  q2.submit([&](handler& h) {
-    accessor in{b3, h};
+  // buffer<short> b3{countVec};
 
-    h.parallel_for(1400000000, [=](id<1> idx) {
-      if(in[idx] > 0)
-        {
-          spdlog::info("Hash value: {} is counted {} times.", idx, in[idx]);
-        }
-    });
-  });
+  // queue q2;
+  // q2.submit([&](handler& h) {
+  //   accessor in{b3, h};
+
+  //   h.parallel_for(1400000000, [=](id<1> idx) {
+  //     if(in[idx] > 0)
+  //       {
+  //         spdlog::info("Hash value: {} is counted {} times.", idx, in[idx]);
+  //       }
+  //   });
+  // });
 
   auto end_program = high_resolution_clock::now();
 
