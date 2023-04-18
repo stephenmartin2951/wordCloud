@@ -83,7 +83,17 @@ int main(int argc, char **argv) {
 
   auto display_wordcloud = high_resolution_clock::now();
 
-  display_wordcount(countVec);
+  host_accessor A{b2};
+
+  for(size_t i = 0; i != A.size(); ++i)
+  {
+    if(A[i] > 0)
+      {
+        cout << "Hash value " << i << " is counted " << A[i] << " times. \n";
+      }
+  }   
+
+  // display_wordcount(A);
 
   // buffer<short> b3{countVec};
 
