@@ -24,7 +24,7 @@ using namespace std;
 using namespace std::chrono;
 using namespace sycl;
 
-void display_wordcount(vector<short>& countVec)
+void display_wordcount(vector<size_t>& countVec)
 {
   for(size_t i = 0; i != countVec.size(); ++i)
   {
@@ -67,8 +67,9 @@ int main(int argc, char **argv) {
   //CLI utility implementation ended
   auto start_wordcloud = high_resolution_clock::now();
   word_list();
-  buffer<short> b1{word_list_vec};
+  buffer<size_t> b1{word_list_vec};
   buffer<short> b2{countVec};
+  auto R = range<1>(word_list_vec.size());
 
   queue q1;
     // Submit the kernel to the queue
@@ -76,28 +77,24 @@ int main(int argc, char **argv) {
     accessor in{b1, h};
     accessor out{b2, h};
 
-    h.parallel_for(5545, [=](id<1> idx) {
+    h.parallel_for(R, [=](id<1> idx) {
       out[in[idx]]++;
     });
   });
 
+  host_accessor result{b2, read_only};
   auto display_wordcloud = high_resolution_clock::now();
 
-  display_wordcount(countVec);
+  for(size_t i = 0; i != result.size(); ++i)
+  {
+    if(result[i] > 0)
+    {
+      cout << "Hash value " << i << " is counted " << result[i] << " times. \n";
+    }
+  } 
 
-  // buffer<short> b3{countVec};
 
-  // queue q2;
-  // q2.submit([&](handler& h) {
-  //   accessor in{b3, h};
-
-  //   h.parallel_for(1400000000, [=](id<1> idx) {
-  //     if(in[idx] > 0)
-  //       {
-  //         spdlog::info("Hash value: {} is counted {} times.", idx, in[idx]);
-  //       }
-  //   });
-  // });
+  
 
   auto end_program = high_resolution_clock::now();
 
