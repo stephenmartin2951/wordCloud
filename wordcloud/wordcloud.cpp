@@ -93,6 +93,23 @@ void display_wordcount()
   }   
 }
 
+void display_wordcount(vector<size_t> subVector)
+{
+  vector<short> tempCountVec(1400000000);
+  for(auto hash : subVector)
+  {
+    tempCountVec[hash]++;
+  }
+
+  for(size_t i = 0; i != tempCountVec.size(); ++i)
+  {
+    if(tempCountVec[i] > 0)
+    {
+      cout << "Hash value " << i << " is counted " << tempCountVec[i] << " times. \n";
+    }
+  }   
+}
+
 void word_cloud()
 {
   	fstream inputfile;
@@ -105,17 +122,8 @@ void word_cloud()
           vector<string> words = line_split(lineRead);
           for(auto word: words)
             {
-              if(word.length() <= 5)
-                break;   
-              if(word.find(',') != string::npos)
-                word.erase(remove(word.begin(), word.end(), ','), word.end());
               size_t hash1 = hash<string>{} (word) % bits;
-              countVec[hash1]++;
-              // if(wordCloud.size() >= slidingSize)
-              // {
-              //   display_wordcount(wordCloud);
-              //   wordCloud.pop();
-              // }   
+              word_list_vec.push_back(hash1);
             }
       }  
   inputfile.close();
@@ -135,17 +143,21 @@ int main(int argc, char **argv) {
   //CLI utility implementation ended
   auto start_wordcloud = high_resolution_clock::now();
   word_cloud();
-  auto display_wordcloud = high_resolution_clock::now();
-  display_wordcount();
+  vector<size_t> sub1(&word_list_vec[0], &word_list_vec[6000]);
+  display_wordcount(sub1);
+  vector<size_t> sub2(&word_list_vec[6000], &word_list_vec[12000]);
+  display_wordcount(sub2);
+  vector<size_t> sub3(&word_list_vec[12000], &word_list_vec[18000]);
+  display_wordcount(sub3);
+  vector<size_t> sub4(&word_list_vec[18000], &word_list_vec[24000]);
+  display_wordcount(sub4);
+  vector<size_t> sub5(&word_list_vec[24000], &word_list_vec[word_list_vec.size() + 1]);
+  display_wordcount(sub5);
   auto end_program = high_resolution_clock::now();
 
   auto total_runtime = duration_cast<microseconds>(end_program - start_program);
-  auto wordcloud_generation = duration_cast<microseconds>(display_wordcloud - start_wordcloud);
-  auto wordcloud_display = duration_cast<microseconds>(end_program - display_wordcloud);
 
   cout << "Total run time : " << total_runtime.count() << " microseconds" << endl;
-  cout << "Wordcloud generation time : " << wordcloud_generation.count() << " microseconds" << endl;
-  cout << "Wordcloud display time : " << wordcloud_display.count() << " microseconds" << endl;
 
   return 0;
 
