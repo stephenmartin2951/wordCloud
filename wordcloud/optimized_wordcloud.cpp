@@ -65,46 +65,113 @@ int main(int argc, char **argv) {
 
   CLI11_PARSE(app, argc, argv);
   //CLI utility implementation ended
-  auto start_wordcloud = high_resolution_clock::now();
+
+  //word_list_vec.size() = 31716
   word_list();
   buffer<size_t> b1{word_list_vec};
-  buffer<short> b2{countVec};
-  auto R = range<1>(word_list_vec.size());
+  auto N = word_list_vec.size();
+  auto R = range<1>(N / windowSize);
 
+  //Window 1
+  buffer<size_t> sB1(b1, 0, range{ N / windowSize });
+  buffer<short> oSB1{countVec};
   queue q1;
-    // Submit the kernel to the queue
+  // Submit the kernel to the queue
   q1.submit([&](handler& h) {
-    accessor in{b1, h};
-    accessor out{b2, h};
+    accessor in{sB1, h, read_only};
+    accessor out{oSB1, h, write_only, no_init};
 
     h.parallel_for(R, [=](id<1> idx) {
       out[in[idx]]++;
     });
   });
 
-  host_accessor result{b2, read_only};
-  auto display_wordcloud = high_resolution_clock::now();
+  host_accessor result1{oSB1, read_only};
+  for(size_t i = 0; i != result1.size(); ++i)
+    if(result1[i] > 0)
+      cout << "Hash value " << i << " is counted " << result1[i] << " times. \n";
 
-  for(size_t i = 0; i != result.size(); ++i)
-  {
-    if(result[i] > 0)
-    {
-      cout << "Hash value " << i << " is counted " << result[i] << " times. \n";
-    }
-  } 
+  //Window 2
+  buffer<size_t> sB2(b1, 6000, range{ N / windowSize });
+  buffer<short> oSB2{countVec};
+  queue q2;
+  // Submit the kernel to the queue
+  q2.submit([&](handler& h) {
+    accessor in{sB2, h, read_only};
+    accessor out{oSB2, h, write_only, no_init};
 
+    h.parallel_for(R, [=](id<1> idx) {
+      out[in[idx]]++;
+    });
+  });
 
-  
+  host_accessor result2{oSB2, read_only};
+  for(size_t i = 0; i != result2.size(); ++i)
+    if(result2[i] > 0)
+      cout << "Hash value " << i << " is counted " << result2[i] << " times. \n";
+
+  //Window 3
+  buffer<size_t> sB3(b1, 12000, range{ N / windowSize });
+  buffer<short> oSB3{countVec};
+  queue q3;
+  // Submit the kernel to the queue
+  q3.submit([&](handler& h) {
+    accessor in{sB3, h, read_only};
+    accessor out{oSB3, h, write_only, no_init};
+
+    h.parallel_for(R, [=](id<1> idx) {
+      out[in[idx]]++;
+    });
+  });
+
+  host_accessor result3{oSB3, read_only};
+  for(size_t i = 0; i != result3.size(); ++i)
+    if(result3[i] > 0)
+      cout << "Hash value " << i << " is counted " << result3[i] << " times. \n";  
+
+  //Window 4
+  buffer<size_t> sB4(b1, 18000, range{ N / windowSize });
+  buffer<short> oSB4{countVec};
+  queue q4;
+  // Submit the kernel to the queue
+  q4.submit([&](handler& h) {
+    accessor in{sB4, h, read_only};
+    accessor out{oSB4, h, write_only, no_init};
+
+    h.parallel_for(R, [=](id<1> idx) {
+      out[in[idx]]++;
+    });
+  });
+
+  host_accessor result4{oSB4, read_only};
+  for(size_t i = 0; i != result4.size(); ++i)
+    if(result4[i] > 0)
+      cout << "Hash value " << i << " is counted " << result4[i] << " times. \n";   
+
+  //Window 5
+  buffer<size_t> sB5(b1, 24000, range{ N / windowSize });
+  buffer<short> oSB5{countVec};
+  queue q5;
+  // Submit the kernel to the queue
+  q5.submit([&](handler& h) {
+    accessor in{sB5, h, read_only};
+    accessor out{oSB5, h, write_only, no_init};
+
+    h.parallel_for(R, [=](id<1> idx) {
+      out[in[idx]]++;
+    });
+  });
+
+  host_accessor result5{oSB5, read_only};
+  for(size_t i = 0; i != result5.size(); ++i)
+    if(result5[i] > 0)
+      cout << "Hash value " << i << " is counted " << result5[i] << " times. \n";  
 
   auto end_program = high_resolution_clock::now();
 
   auto total_runtime = duration_cast<microseconds>(end_program - start_program);
-  auto wordcloud_generation = duration_cast<microseconds>(display_wordcloud - start_wordcloud);
-  auto wordcloud_display = duration_cast<microseconds>(end_program - display_wordcloud);
 
   cout << "Total run time : " << total_runtime.count() << " microseconds \n";
-  cout << "Wordcloud generation time : " << wordcloud_generation.count() << " microseconds \n";
-  cout << "Wordcloud display time : " << wordcloud_display.count() << " microseconds \n";
 
   return 0;
 

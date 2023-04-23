@@ -10,4 +10,5 @@ std::vector<std::string> wordcloud_vec(bloomBits);
 std::vector<std::string> badWords = {"value not found"};
 std::set<std::string> uniqWords;
 std::vector<size_t> word_list_vec;
+int windowSize = 5;
 
