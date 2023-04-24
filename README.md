@@ -1,4 +1,4 @@
-# wordCloud
+# Wordcloud using OpenAPI/SYCL
 This is a special team for folks who need to be on a new team for the second assignment (Bloom Filters)
 
 Useful links:
